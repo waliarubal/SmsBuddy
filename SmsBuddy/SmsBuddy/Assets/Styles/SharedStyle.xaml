@@ -2,8 +2,12 @@
     <Style x:Key="BaseStyle" TargetType="FrameworkElement">
         <Setter Property="Margin" Value="2" />
     </Style>
-    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBlock" />
     <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBox">
+        <Setter Property="Height" Value="22" />
+    </Style>
     <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Button">
         <Setter Property="MinWidth" Value="60" />
     </Style>
@@ -14,7 +18,7 @@
         <Setter Property="Height" Value="18" />
         <Setter Property="Width" Value="18" />
     </Style>
-    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBlock" />
+
     <Style
         x:Key="HorizontalSeparator"
         BasedOn="{StaticResource ResourceKey=BaseStyle}"
