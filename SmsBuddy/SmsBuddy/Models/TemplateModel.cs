@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SmsBuddy.Models
 {
-    [TableName(nameof(TemplateModel)]
+    [TableName(nameof(TemplateModel))]
     [PrimaryKey(nameof(Id))]
     class TemplateModel: NotificationBase
     {
