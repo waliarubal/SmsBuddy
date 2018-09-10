@@ -1,15 +1,25 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
 using NullVoidCreations.WpfHelpers.Commands;
+using NullVoidCreations.WpfHelpers.DataStructures;
 using SmsBuddy.Models;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
 {
+
     class TemplateViewModel: ViewModelBase
     {
         string _field, _selectedField;
         TemplateModel _template;
-        ICommand _addField, _removeField;
+        ICommand _addField, _removeField, _moveField;
+
+        internal TemplateViewModel() { }
+
+        public TemplateViewModel(TemplateModel template): this()
+        {
+            Template = template;
+        }
 
         #region properties
 
@@ -56,6 +66,16 @@ namespace SmsBuddy.ViewModels
                 return _removeField;
             }
         }
+        public ICommand MoveFieldCommand
+        {
+            get
+            {
+                if (_moveField == null)
+                    _moveField = new RelayCommand(MoveField);
+
+                return _moveField;
+            }
+        }
 
         #endregion
 
@@ -72,6 +92,14 @@ namespace SmsBuddy.ViewModels
 
             if (Template.RemoveField(SelectedField))
                 SelectedField = null;
+        }
+
+        void MoveField()
+        {
+            if (string.IsNullOrEmpty(SelectedField))
+                return;
+
+            Template.Template = string.Format("{0}<<{1}>>", Template.Template, SelectedField);
         }
     }
 }

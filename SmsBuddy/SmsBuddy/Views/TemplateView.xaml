@@ -69,7 +69,10 @@
             </Button>
         </Grid>
 
-        <Button Grid.Row="3" Grid.Column="1">
+        <Button
+            Grid.Row="3"
+            Grid.Column="1"
+            Command="{Binding Path=RemoveFieldCommand, Mode=OneTime}">
             <Image Source="/Assets/Images/right-32.png" />
         </Button>
 

@@ -1,14 +1,29 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
+using PetaPoco;
 using System.Collections.Generic;
 
 namespace SmsBuddy.Models
 {
+    [TableName(nameof(TemplateModel)]
+    [PrimaryKey(nameof(Id))]
     class TemplateModel: NotificationBase
     {
+        long _id;
         string _name, _template;
-        HashSet<string> _fields;
+        readonly HashSet<string> _fields;
+
+        public TemplateModel()
+        {
+            _fields = new HashSet<string>();
+        }
 
         #region properties
+
+        public long Id
+        {
+            get { return _id; }
+            set { Set(nameof(Id), ref _id, value); }
+        }
 
         public string Name
         {

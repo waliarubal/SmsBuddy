@@ -40,7 +40,11 @@
     <Reference Include="NullVoidCreations.WpfHelpers, Version=18.8.23.14, Culture=neutral, PublicKeyToken=203b8d613f6ac171, processorArchitecture=MSIL">
       <HintPath>..\packages\NullVoidCreations.WpfHelpers.18.8.23.14\lib\net40\NullVoidCreations.WpfHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="PetaPoco, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PetaPoco.Compiled.6.0.316\lib\net40\PetaPoco.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
