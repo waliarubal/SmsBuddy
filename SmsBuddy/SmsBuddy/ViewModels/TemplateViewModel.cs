@@ -1,8 +1,6 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
 using NullVoidCreations.WpfHelpers.Commands;
-using NullVoidCreations.WpfHelpers.DataStructures;
 using SmsBuddy.Models;
-using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
@@ -14,7 +12,10 @@ namespace SmsBuddy.ViewModels
         TemplateModel _template;
         ICommand _addField, _removeField, _moveField;
 
-        internal TemplateViewModel() { }
+        public TemplateViewModel()
+        {
+            Template = new TemplateModel();
+        }
 
         public TemplateViewModel(TemplateModel template): this()
         {

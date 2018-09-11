@@ -70,8 +70,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\SmsModel.cs" />
     <Compile Include="Models\TemplateModel.cs" />
+    <Compile Include="Shared.cs" />
     <Compile Include="ViewModels\SmsViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">

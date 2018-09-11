@@ -1,12 +1,11 @@
-﻿using NullVoidCreations.WpfHelpers.Base;
-using PetaPoco;
+﻿using PetaPoco;
 using System.Collections.Generic;
 
 namespace SmsBuddy.Models
 {
     [TableName(nameof(TemplateModel))]
     [PrimaryKey(nameof(Id))]
-    class TemplateModel: NotificationBase
+    class TemplateModel: ModelBase
     {
         long _id;
         string _name, _template;
@@ -60,6 +59,21 @@ namespace SmsBuddy.Models
                 RaisePropertyChanged(nameof(Fields));
 
             return isRemoved;
+        }
+
+        internal override IEnumerable<ModelBase> Get()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        internal override bool Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        internal override bool Delete()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
