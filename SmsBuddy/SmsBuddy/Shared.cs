@@ -8,7 +8,6 @@ namespace SmsBuddy
     {
         static object _syncLock;
         static Shared _instance;
-        readonly string _dbPath;
 
         #region constructor/destructor
 
@@ -19,7 +18,7 @@ namespace SmsBuddy
 
         private Shared()
         {
-            _dbPath = Path.Combine(Application.Current.GetStartupDirectory(), "Assets", "Data", "Data.sqlite");
+            DbPath = Path.Combine(Application.Current.GetStartupDirectory(), "Assets", "Data", "Data.sqlite");
         }
 
         #endregion
@@ -40,10 +39,7 @@ namespace SmsBuddy
             }
         }
 
-        public string DbPath
-        {
-            get { return _dbPath; }
-        }
+        public string DbPath { get; }
 
         #endregion
     }

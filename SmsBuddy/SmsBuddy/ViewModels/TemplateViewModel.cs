@@ -5,7 +5,6 @@ using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
 {
-
     class TemplateViewModel: ViewModelBase
     {
         string _field, _selectedField;
