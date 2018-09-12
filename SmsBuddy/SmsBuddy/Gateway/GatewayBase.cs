@@ -56,5 +56,10 @@ namespace SmsBuddy.Gateway
         public abstract bool SendSms(string text);
 
         public abstract long GetBalance();
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

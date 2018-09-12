@@ -10,6 +10,6 @@
     Height="600"
     mc:Ignorable="d">
     <Grid>
-
+        <v:GatewayView />
     </Grid>
 </Window>
