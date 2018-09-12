@@ -40,6 +40,9 @@
     <Reference Include="NullVoidCreations.WpfHelpers, Version=18.8.23.14, Culture=neutral, PublicKeyToken=203b8d613f6ac171, processorArchitecture=MSIL">
       <HintPath>..\packages\NullVoidCreations.WpfHelpers.18.8.23.14\lib\net40\NullVoidCreations.WpfHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -67,6 +70,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gateway\GatewayBase.cs" />
+    <Compile Include="ViewModels\GatewayViewModel.cs" />
+    <Compile Include="Views\GatewayView.xaml.cs">
+      <DependentUpon>GatewayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gateway\Textlocal.cs" />
@@ -95,8 +105,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\GatewayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
