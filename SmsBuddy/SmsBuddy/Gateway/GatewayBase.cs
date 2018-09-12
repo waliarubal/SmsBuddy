@@ -34,11 +34,22 @@ namespace SmsBuddy.Gateway
 
         #endregion
 
-        protected void SetParameterNames(IEnumerable<string> parameterNames)
+        protected object GetParameterValue(string name)
+        {
+            foreach (var parameter in _parameters)
+                if (parameter.First.Equals(name))
+                    return parameter.Second;
+
+            return default(object);
+        }
+
+        protected void SetParameterNames(params string[] parameterNames)
         {
             var parameters = new List<Doublet<string, object>>();
             foreach (var parameterName in parameterNames)
-                parameters.Add(new Doublet<string, object>(parameterName, null));
+                if (!string.IsNullOrWhiteSpace(parameterName))
+                    parameters.Add(new Doublet<string, object>(parameterName, null));
+
             Parameters = parameters;
         }
 

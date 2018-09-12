@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SmsBuddy.Gateway
 {
     class Textlocal : GatewayBase
     {
+        const string API_KEY = "API Key";
+        const string API_BASE_URL = "https://api.textlocal.in/";
+
         public Textlocal(): base("Textlocal")
         {
-            var parameterNames = new List<string> { "Dummy" };
-            SetParameterNames(parameterNames);
+            SetParameterNames(API_KEY);
         }
 
         public override long GetBalance()
