@@ -33,7 +33,10 @@
             ItemsSource="{Binding Path=Gateways, Mode=OneWay}"
             SelectedValue="{Binding Path=Gateway, Mode=TwoWay}" />
 
-        <Label Grid.Row="1" Content="Gateway Settings:" />
+        <Label
+            Grid.Row="1"
+            VerticalAlignment="Top"
+            Content="Gateway Settings:" />
         <ItemsControl
             Grid.Row="1"
             Grid.Column="1"

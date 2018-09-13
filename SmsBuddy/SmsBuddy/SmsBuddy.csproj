@@ -138,5 +138,8 @@
   <ItemGroup>
     <Resource Include="Assets\Images\mobile-32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\clear-symbol-32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

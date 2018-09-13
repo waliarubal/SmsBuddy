@@ -24,10 +24,24 @@
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                     <Setter Property="Command" Value="{Binding Path=ShowViewCommand, Mode=OneTime}" />
                 </Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+                <Style BasedOn="{StaticResource ResourceKey=ButtonImageStyle}" TargetType="Image" />
             </ToolBarTray.Resources>
             <ToolBar ToolBarTray.IsLocked="True">
-                <Button CommandParameter="{x:Type vm:SmsViewModel}" Style="{StaticResource ResourceKey=NavigationButtonStyle}">Simple SMS</Button>
-                <Button CommandParameter="{x:Type vm:GatewayViewModel}" Style="{StaticResource ResourceKey=NavigationButtonStyle}">Gateway</Button>
+                <Button CommandParameter="{x:Type vm:SmsViewModel}" Style="{StaticResource ResourceKey=NavigationButtonStyle}">
+                    <StackPanel>
+                        <Image Source="/Assets/Images/sms-32.png" />
+                        <TextBlock Text="Simple SMS" />
+                    </StackPanel>
+                </Button>
+                <Button CommandParameter="{x:Type vm:GatewayViewModel}" Style="{StaticResource ResourceKey=NavigationButtonStyle}">
+                    <StackPanel>
+                        <Image Source="/Assets/Images/mobile-32.png" />
+                        <TextBlock Text="Gateway" />
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <ContentPresenter

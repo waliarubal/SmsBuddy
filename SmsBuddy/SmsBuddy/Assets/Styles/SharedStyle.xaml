@@ -15,4 +15,16 @@
     <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Label">
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Button">
+        <Setter Property="MinWidth" Value="60" />
+    </Style>
+
+    <!--  named styles  -->
+    <Style
+        x:Key="ButtonImageStyle"
+        BasedOn="{StaticResource ResourceKey=BaseStyle}"
+        TargetType="Image">
+        <Setter Property="Height" Value="18" />
+        <Setter Property="Width" Value="18" />
+    </Style>
 </ResourceDictionary>

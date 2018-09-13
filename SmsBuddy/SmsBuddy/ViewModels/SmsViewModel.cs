@@ -7,7 +7,7 @@ namespace SmsBuddy.ViewModels
 {
     class SmsViewModel: ViewModelBase
     {
-        ICommand _send;
+        ICommand _send, _clear;
         GatewayBase _gateway;
 
         #region properties
@@ -32,9 +32,25 @@ namespace SmsBuddy.ViewModels
             }
         }
 
+        public ICommand ClearCommand
+        {
+            get
+            {
+                if (_clear == null)
+                    _clear = new RelayCommand(Clear);
+
+                return _clear;
+            }
+        }
+
         #endregion
 
         void Send()
+        {
+
+        }
+
+        void Clear()
         {
 
         }
