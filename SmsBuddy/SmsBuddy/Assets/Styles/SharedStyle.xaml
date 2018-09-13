@@ -9,10 +9,20 @@
         TargetType="FrameworkElement">
         <Setter Property="MinHeight" Value="22" />
     </Style>
+    <Style
+        x:Key="ContentControlStyle"
+        BasedOn="{StaticResource ResourceKey=BaseStyle}"
+        TargetType="FrameworkElement">
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
     <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBlock" />
+    <Style BasedOn="{StaticResource ResourceKey=ContentControlStyle}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource ResourceKey=ContentControlStyle}" TargetType="GroupBox" />
     <Style BasedOn="{StaticResource ResourceKey=InputControlStyle}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource ResourceKey=InputControlStyle}" TargetType="ComboBox" />
     <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Label">
+        <Setter Property="Margin" Value="0" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
     <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Button">

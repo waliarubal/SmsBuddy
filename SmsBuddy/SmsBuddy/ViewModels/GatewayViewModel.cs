@@ -3,6 +3,7 @@ using NullVoidCreations.WpfHelpers.Commands;
 using SmsBuddy.Gateway;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Input;
 
@@ -10,17 +11,21 @@ namespace SmsBuddy.ViewModels
 {
     class GatewayViewModel : ViewModelBase
     {
-        GatewayBase _gateway;
         IEnumerable<GatewayBase> _gateways;
         ICommand _iniatialize;
         bool _isInitialized;
+
+        public GatewayViewModel()
+        {
+            Shared.Instance.PropertyChanged += (object sender, PropertyChangedEventArgs e) => RaisePropertyChanged(e.PropertyName);
+        }
 
         #region properties
 
         public GatewayBase Gateway
         {
-            get { return _gateway; }
-            set { Set(nameof(Gateway), ref _gateway, value); }
+            get { return Shared.Instance.Gateway; }
+            set { Shared.Instance.Gateway = value; }
         }
 
         public IEnumerable<GatewayBase> Gateways

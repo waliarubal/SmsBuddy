@@ -8,13 +8,9 @@ namespace SmsBuddy.Gateway
 
         public Textlocal(): base("Textlocal")
         {
-            SetParameterNames("Base URL", "API Key");
-            SetParameterValue("Base URL", API_BASE_URL);
-        }
-
-        public override long GetBalance()
-        {
-            throw new NotImplementedException();
+            Version = new Version(18, 9, 13, 21);
+            ProviderUrl = new Uri("https://www.textlocal.in/");
+            SetParameterNames("API Key");
         }
 
         public override bool SendSms(string text, params string[] mobileNumbers)

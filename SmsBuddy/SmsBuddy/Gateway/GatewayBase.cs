@@ -1,5 +1,6 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
 using NullVoidCreations.WpfHelpers.DataStructures;
+using System;
 using System.Collections.Generic;
 
 namespace SmsBuddy.Gateway
@@ -7,6 +8,8 @@ namespace SmsBuddy.Gateway
     abstract class GatewayBase: NotificationBase
     {
         string _name;
+        Version _version;
+        Uri _providerUrl;
         IEnumerable<Doublet<string, object>> _parameters;
 
         #region constructor/destructor
@@ -14,6 +17,7 @@ namespace SmsBuddy.Gateway
         protected GatewayBase(string name)
         {
             Name = name;
+            Version = new Version(1, 0);
         }
 
         #endregion
@@ -26,15 +30,33 @@ namespace SmsBuddy.Gateway
             private set { Set(nameof(Name), ref _name, value); }
         }
 
+        public Version Version
+        {
+            get { return _version; }
+            protected set { Set(nameof(Version), ref _version, value); }
+        }
+
+        public Uri ProviderUrl
+        {
+            get { return _providerUrl; }
+            protected set { Set(nameof(ProviderUrl), ref _providerUrl, value); }
+        }
+
         public IEnumerable<Doublet<string, object>> Parameters
         {
             get { return _parameters; }
             private set { Set(nameof(Parameters), ref _parameters, value); }
         }
 
+        protected object this[string name]
+        {
+            get { return GetParameter(name); }
+            set { SetParameter(name, value); }
+        }
+
         #endregion
 
-        protected object GetParameterValue(string name)
+        object GetParameter(string name)
         {
             foreach (var parameter in _parameters)
                 if (parameter.First.Equals(name))
@@ -43,7 +65,7 @@ namespace SmsBuddy.Gateway
             return default(object);
         }
 
-        protected void SetParameterValue(string name, object value)
+        void SetParameter(string name, object value)
         {
             foreach(var parameter in _parameters)
             {
@@ -55,19 +77,22 @@ namespace SmsBuddy.Gateway
             }  
         }
 
-        protected void SetParameterNames(params string[] parameterNames)
+        protected void SetParameterNames(params string[] names)
         {
             var parameters = new List<Doublet<string, object>>();
-            foreach (var parameterName in parameterNames)
-                if (!string.IsNullOrWhiteSpace(parameterName))
-                    parameters.Add(new Doublet<string, object>(parameterName, null));
+            foreach (var name in names)
+                if (!string.IsNullOrWhiteSpace(name))
+                    parameters.Add(new Doublet<string, object>(name, null));
 
             Parameters = parameters;
         }
 
         public abstract bool SendSms(string text, params string[] mobileNumbers);
 
-        public abstract long GetBalance();
+        public virtual long GetBalance()
+        {
+            return 0L;
+        }
 
         public override string ToString()
         {

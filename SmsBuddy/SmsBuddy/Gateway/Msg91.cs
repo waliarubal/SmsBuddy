@@ -8,13 +8,9 @@ namespace SmsBuddy.Gateway
 
         public Msg91(): base("MSG91")
         {
-            SetParameterNames("Base URL", "Auth Key");
-            SetParameterValue("Base URL", API_BASE_URL);
-        }
-
-        public override long GetBalance()
-        {
-            throw new NotImplementedException();
+            Version = new Version(18, 9, 13, 21);
+            ProviderUrl = new Uri("https://msg91.com/");
+            SetParameterNames("Auth Key", "Country");
         }
 
         public override bool SendSms(string text, params string[] mobileNumbers)

@@ -19,40 +19,65 @@
     </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Label Content="Gateway:" />
-        <ComboBox
-            Grid.Column="1"
+        <ListBox
+            Grid.RowSpan="4"
             ItemsSource="{Binding Path=Gateways, Mode=OneWay}"
             SelectedValue="{Binding Path=Gateway, Mode=TwoWay}" />
 
+        <Label Grid.Column="1" Content="Name:" />
+        <TextBlock Grid.Column="2" Text="{Binding Path=Gateway.Name, Mode=OneWay}" />
+
         <Label
             Grid.Row="1"
-            VerticalAlignment="Top"
-            Content="Gateway Settings:" />
-        <ItemsControl
-            Grid.Row="1"
             Grid.Column="1"
-            ItemsSource="{Binding Path=Gateway.Parameters, Mode=OneWay}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="120" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Path=First, Mode=OneTime, StringFormat='{}{0}:'}" />
-                        <TextBox Grid.Column="1" Text="{Binding Path=Second, Mode=TwoWay}" />
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            Content="Version:" />
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="2"
+            Text="{Binding Path=Gateway.Version, Mode=OneWay}" />
+
+        <Label
+            Grid.Row="2"
+            Grid.Column="1"
+            Content="Website:" />
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="2"
+            Text="{Binding Path=Gateway.ProviderUrl, Mode=OneWay}" />
+
+        <GroupBox
+            Grid.Row="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="2">
+            <GroupBox.Header>
+                <TextBlock Text="Settings" />
+            </GroupBox.Header>
+            <ItemsControl Margin="4" ItemsSource="{Binding Path=Gateway.Parameters, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" MinWidth="80" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Path=First, Mode=OneTime, StringFormat='{}{0}:'}" />
+                            <TextBox Grid.Column="1" Text="{Binding Path=Second, Mode=TwoWay}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </GroupBox>
+
     </Grid>
 </UserControl>
