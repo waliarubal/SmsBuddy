@@ -13,6 +13,7 @@ namespace SmsBuddy.ViewModels
         GatewayBase _gateway;
         IEnumerable<GatewayBase> _gateways;
         ICommand _iniatialize;
+        bool _isInitialized;
 
         #region properties
 
@@ -47,6 +48,9 @@ namespace SmsBuddy.ViewModels
 
         void Initialize()
         {
+            if (_isInitialized)
+                return;
+
             var gatewayBase = typeof(GatewayBase);
             var gateways = new List<GatewayBase>();
             foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
@@ -56,6 +60,8 @@ namespace SmsBuddy.ViewModels
                     gateways.Add(gateway);
 
             Gateways = gateways;
+
+            _isInitialized = true;
         }
     }
 }
