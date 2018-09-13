@@ -4,12 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:v="clr-namespace:SmsBuddy.Views"
     Title="SMS Buddy"
     Width="800"
     Height="600"
     mc:Ignorable="d">
     <Grid>
-        <v:GatewayView />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button>Simple SMS</Button>
+            <Button>Gateway</Button>
+        </StackPanel>
+        <ContentPresenter Grid.Column="1" />
     </Grid>
 </Window>
