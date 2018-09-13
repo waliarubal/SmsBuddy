@@ -130,5 +130,13 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\authentication-32.png" />
+    <Resource Include="Assets\Images\auto-sms-32.png" />
+    <Resource Include="Assets\Images\sms-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\mobile-32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
