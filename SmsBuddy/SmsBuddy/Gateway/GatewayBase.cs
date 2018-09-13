@@ -65,7 +65,7 @@ namespace SmsBuddy.Gateway
             Parameters = parameters;
         }
 
-        public abstract bool SendSms(string text);
+        public abstract bool SendSms(string text, params string[] mobileNumbers);
 
         public abstract long GetBalance();
 

@@ -17,7 +17,7 @@ namespace SmsBuddy.Gateway
             throw new NotImplementedException();
         }
 
-        public override bool SendSms(string text)
+        public override bool SendSms(string text, params string[] mobileNumbers)
         {
             throw new NotImplementedException();
         }
