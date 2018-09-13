@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="BaseStyle" TargetType="FrameworkElement">
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="MinHeight" Value="22" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBlock" />
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Label">
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+</ResourceDictionary>

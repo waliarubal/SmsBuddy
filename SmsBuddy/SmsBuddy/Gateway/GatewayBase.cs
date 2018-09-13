@@ -43,6 +43,18 @@ namespace SmsBuddy.Gateway
             return default(object);
         }
 
+        protected void SetParameterValue(string name, object value)
+        {
+            foreach(var parameter in _parameters)
+            {
+                if (parameter.First.Equals(name))
+                {
+                    parameter.Second = value;
+                    return;
+                }
+            }  
+        }
+
         protected void SetParameterNames(params string[] parameterNames)
         {
             var parameters = new List<Doublet<string, object>>();

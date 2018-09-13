@@ -2,13 +2,13 @@
 
 namespace SmsBuddy.Gateway
 {
-    class Textlocal : GatewayBase
+    class Msg91 : GatewayBase
     {
-        const string API_BASE_URL = "https://api.textlocal.in/";
+        const string API_BASE_URL = "http://api.msg91.com/api/";
 
-        public Textlocal(): base("Textlocal")
+        public Msg91(): base("MSG91")
         {
-            SetParameterNames("Base URL", "API Key");
+            SetParameterNames("Base URL", "Auth Key");
             SetParameterValue("Base URL", API_BASE_URL);
         }
 

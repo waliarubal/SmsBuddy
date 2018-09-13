@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gateway\GatewayBase.cs" />
+    <Compile Include="Gateway\Msg91.cs" />
     <Compile Include="ViewModels\GatewayViewModel.cs" />
     <Compile Include="Views\GatewayView.xaml.cs">
       <DependentUpon>GatewayView.xaml</DependentUpon>
@@ -104,10 +105,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Assets\Styles\SharedStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GatewayView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
