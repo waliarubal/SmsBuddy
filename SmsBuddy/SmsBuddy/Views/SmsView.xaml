@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Content="Mobile Number(s):" />
-        <TextBox Grid.Column="1" />
+        <TextBox Grid.Column="1" Text="{Binding Path=Sms.Mobiles, Mode=TwoWay}" />
 
         <Label
             Grid.Row="1"
@@ -32,6 +32,7 @@
             Grid.Row="1"
             Grid.Column="1"
             VerticalAlignment="Stretch"
+            Text="{Binding Path=Sms.Text, Mode=TwoWay}"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Auto" />
 
@@ -45,10 +46,10 @@
                 </Style>
                 <Style BasedOn="{StaticResource ResourceKey=ButtonImageStyle}" TargetType="Image" />
             </StackPanel.Resources>
-            <Button Command="{Binding Path=SendCommand, Mode=OneTime}">
+            <Button Command="{Binding Path=SendCommand, Mode=OneTime}" CommandParameter="{Binding Path=Sms, Mode=OneWay}">
                 <StackPanel>
                     <Image Source="/Assets/Images/sms-32.png" />
-                    <TextBlock Text="Simple SMS" />
+                    <TextBlock Text="Send" />
                 </StackPanel>
             </Button>
             <Button Command="{Binding Path=ClearCommand, Mode=OneTime}">

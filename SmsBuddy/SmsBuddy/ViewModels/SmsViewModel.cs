@@ -1,6 +1,7 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
 using NullVoidCreations.WpfHelpers.Commands;
 using SmsBuddy.Gateway;
+using SmsBuddy.Models;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
@@ -8,13 +9,19 @@ namespace SmsBuddy.ViewModels
     class SmsViewModel: ViewModelBase
     {
         ICommand _send, _clear;
-        GatewayBase _gateway;
+        SmsModel _sms;
 
         #region properties
 
         public GatewayBase Gateway
         {
-            get { return _gateway; }
+            get { return Shared.Instance.Gateway; }
+        }
+
+        public SmsModel Sms
+        {
+            get { return _sms; }
+            set { Set(nameof(Sms), ref _sms, value); }
         }
 
         #endregion
@@ -26,7 +33,7 @@ namespace SmsBuddy.ViewModels
             get
             {
                 if (_send == null)
-                    _send = new RelayCommand(Send);
+                    _send = new RelayCommand<SmsModel>(Send);
 
                 return _send;
             }
@@ -45,14 +52,17 @@ namespace SmsBuddy.ViewModels
 
         #endregion
 
-        void Send()
+        void Send(SmsModel sms)
         {
+            if (Gateway == null)
+                return;
 
+            Gateway.SendSms(sms.Text, sms.GetMobileNumbers());
         }
 
         void Clear()
         {
-
+            Sms = new SmsModel();
         }
     }
 }

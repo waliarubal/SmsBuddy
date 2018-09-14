@@ -51,10 +51,11 @@
             Grid.Row="2"
             Grid.Column="1"
             Content="Website:" />
-        <TextBlock
-            Grid.Row="2"
-            Grid.Column="2"
-            Text="{Binding Path=Gateway.ProviderUrl, Mode=OneWay}" />
+        <TextBlock Grid.Row="2" Grid.Column="2">
+            <Hyperlink NavigateUri="{Binding Path=Gateway.ProviderUrl, Mode=OneWay}">
+                <Run Text="{Binding Path=Gateway.ProviderUrl, Mode=OneWay}" />
+            </Hyperlink>
+        </TextBlock>
 
         <GroupBox
             Grid.Row="3"

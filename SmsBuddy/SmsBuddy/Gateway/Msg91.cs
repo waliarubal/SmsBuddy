@@ -10,7 +10,7 @@ namespace SmsBuddy.Gateway
         {
             Version = new Version(18, 9, 13, 21);
             ProviderUrl = new Uri("https://msg91.com/");
-            SetParameterNames("Auth Key", "Country");
+            SetParameterNames("Auth Key", "Country", "Sender");
         }
 
         public override bool SendSms(string text, params string[] mobileNumbers)
