@@ -11,6 +11,11 @@ namespace SmsBuddy.ViewModels
         ICommand _send, _clear;
         SmsModel _sms;
 
+        public SmsViewModel()
+        {
+            Clear();
+        }
+
         #region properties
 
         public GatewayBase Gateway

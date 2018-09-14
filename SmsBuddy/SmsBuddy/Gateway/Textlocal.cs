@@ -24,7 +24,8 @@ namespace SmsBuddy.Gateway
             var mobile = new StringBuilder();
             foreach (var number in mobileNumbers)
                 mobile.AppendFormat("{0},", number);
-            mobile.Remove(mobile.Length - 1, 1);
+            if (mobile.Length > 0)
+                mobile.Remove(mobile.Length - 1, 1);
 
             var apiKey = this["API Key"].ToString();
             var message = HttpUtility.UrlEncode(text);
