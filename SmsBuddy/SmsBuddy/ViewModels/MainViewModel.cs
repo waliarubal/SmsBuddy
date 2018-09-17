@@ -14,6 +14,11 @@ namespace SmsBuddy.ViewModels
         FrameworkElement _child;
         ICommand _initialize, _showChild;
 
+        public MainViewModel()
+        {
+            _children = new Dictionary<ChildViewModelBase, FrameworkElement>();
+        }
+
         #region properties
 
         public IEnumerable<ChildViewModelBase> Children
@@ -68,20 +73,21 @@ namespace SmsBuddy.ViewModels
 
         void Initialize()
         {
-            var children = new Dictionary<ChildViewModelBase, FrameworkElement>();
             var vmBaseType = typeof(ChildViewModelBase);
-            foreach(Type type in Assembly.GetExecutingAssembly().GetTypes())
+
+            _children.Clear();
+            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (type.IsSubclassOf(vmBaseType))
+                if (type.IsClass && type.IsSubclassOf(vmBaseType))
                 {
                     var childVm = Activator.CreateInstance(type) as ChildViewModelBase;
                     if (childVm == null)
                         continue;
 
-                    children.Add(childVm, null);
+                    _children.Add(childVm, null);
                 }
             }
-            _children = children;
+
             RaisePropertyChanged(nameof(Children));
         }
     }

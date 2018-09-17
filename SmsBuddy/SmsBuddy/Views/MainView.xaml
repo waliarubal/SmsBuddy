@@ -6,36 +6,40 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:SmsBuddy.ViewModels"
-    Title="MainView"
+    Title="SMS Buddy"
     Width="800"
-    Height="450"
+    Height="600"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=InitializeCommand, Mode=OneTime}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ToolBarTray>
-            <ToolBar ItemsSource="{Binding Path=Children, Mode=OneWay}" ToolBarTray.IsLocked="True">
-                <ToolBar.ItemTemplate>
-                    <DataTemplate>
-                        <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToolBar}, Path=DataContext.ShowChildCommand}" CommandParameter="{Binding}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image
-                                    Width="18"
-                                    Height="18"
-                                    Margin="2"
-                                    Source="{Binding Path=Icon, Mode=OneWay}" />
-                                <TextBlock Margin="2" Text="{Binding Path=Title, Mode=OneWay}" />
-                            </StackPanel>
-                        </Button>
-                    </DataTemplate>
-                </ToolBar.ItemTemplate>
-            </ToolBar>
-        </ToolBarTray>
+        <ItemsControl ItemsSource="{Binding Path=Children, Mode=OneWay}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ShowChildCommand}" CommandParameter="{Binding}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image
+                                Width="18"
+                                Height="18"
+                                Margin="2"
+                                Source="{Binding Path=Icon, Mode=OneWay}" />
+                            <TextBlock Margin="2" Text="{Binding Path=Title, Mode=OneWay}" />
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <ContentPresenter Grid.Column="1" Margin="4" />
     </Grid>
 </Window>
