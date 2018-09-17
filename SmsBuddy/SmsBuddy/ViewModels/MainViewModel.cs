@@ -57,7 +57,13 @@ namespace SmsBuddy.ViewModels
 
         void ShowChild(ChildViewModelBase childVm)
         {
-
+            var view = _children[childVm];
+            if (view == null)
+            {
+                view = childVm.GetView();
+                _children[childVm] = view;
+            }
+            Child = view;
         }
 
         void Initialize()

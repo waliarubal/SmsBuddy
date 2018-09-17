@@ -10,22 +10,26 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ToolBarTray>
-            <ToolBar ToolBarTray.IsLocked="True">
+            <ToolBar ItemsSource="{Binding Path=Children, Mode=OneWay}" ToolBarTray.IsLocked="True">
                 <ToolBar.ItemTemplate>
                     <DataTemplate>
-                        <Button>
+                        <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToolBar}, Path=DataContext.ShowChildCommand}" CommandParameter="{Binding}">
                             <StackPanel Orientation="Horizontal">
                                 <Image
                                     Width="18"
                                     Height="18"
-                                    Margin="2" />
-                                <TextBlock Margin="2" Text="" />
+                                    Margin="2"
+                                    Source="{Binding Path=Icon, Mode=OneWay}" />
+                                <TextBlock Margin="2" Text="{Binding Path=Title, Mode=OneWay}" />
                             </StackPanel>
                         </Button>
                     </DataTemplate>

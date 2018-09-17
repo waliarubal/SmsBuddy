@@ -5,7 +5,6 @@ namespace SmsBuddy.ViewModels
     abstract class ChildViewModelBase: ViewModelBase
     {
         string _title, _icon;
-        bool _isInitialized;
 
         protected ChildViewModelBase(string title)
         {
