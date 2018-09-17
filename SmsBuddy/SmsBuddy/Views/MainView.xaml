@@ -27,7 +27,7 @@
         <ItemsControl ItemsSource="{Binding Path=Children, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ShowChildCommand}" CommandParameter="{Binding}">
+                    <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.ShowChildCommand}" CommandParameter="{Binding}">
                         <StackPanel Orientation="Horizontal">
                             <Image
                                 Width="18"
