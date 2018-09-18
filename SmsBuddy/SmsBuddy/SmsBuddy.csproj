@@ -116,5 +116,10 @@
   <ItemGroup>
     <Resource Include="Assets\Images\template-32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\delete-32.png" />
+    <Resource Include="Assets\Images\plus-32.png" />
+    <Resource Include="Assets\Images\right-32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

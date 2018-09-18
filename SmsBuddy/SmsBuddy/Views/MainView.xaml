@@ -24,24 +24,38 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ItemsControl ItemsSource="{Binding Path=Children, Mode=OneWay}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button
-                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.ShowChildCommand, Mode=OneTime}"
-                        CommandParameter="{Binding}"
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image
-                                Width="18"
-                                Height="18"
-                                Source="{Binding Path=Icon, Mode=OneTime}" />
-                            <TextBlock Text="{Binding Path=Title, Mode=OneTime}" />
-                        </StackPanel>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <ContentPresenter Grid.Column="1" Margin="4" />
+        <ToolBarTray Orientation="Vertical">
+            <ToolBar
+                x:Name="toolMain"
+                ItemsSource="{Binding Path=Children, Mode=OneWay}"
+                ToolBarTray.IsLocked="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding Path=RemoveOverflowCommand, Mode=OneTime}" CommandParameter="{Binding ElementName=toolMain}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ToolBar.ItemTemplate>
+                    <DataTemplate>
+                        <Button
+                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.ShowChildCommand, Mode=OneTime}"
+                            CommandParameter="{Binding}"
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            ToolBar.OverflowMode="Never">
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="26"
+                                    Height="26"
+                                    Source="{Binding Path=Icon, Mode=OneTime}" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Path=Title, Mode=OneTime}" />
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ToolBar.ItemTemplate>
+            </ToolBar>
+        </ToolBarTray>
+        <ContentPresenter
+            Grid.Column="1"
+            Margin="4"
+            Content="{Binding Path=Child, Mode=OneWay}" />
     </Grid>
 </Window>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
@@ -13,7 +14,7 @@ namespace SmsBuddy.ViewModels
         readonly Dictionary<ChildViewModelBase, FrameworkElement> _childrenCache;
         IEnumerable<ChildViewModelBase> _children;
         FrameworkElement _child;
-        ICommand _initialize, _showChild;
+        ICommand _initialize, _showChild, _removeOverlflow;
 
         public MainViewModel()
         {
@@ -49,6 +50,17 @@ namespace SmsBuddy.ViewModels
             }
         }
 
+        public ICommand RemoveOverflowCommand
+        {
+            get
+            {
+                if (_removeOverlflow == null)
+                    _removeOverlflow = new RelayCommand<ToolBar>(RemoveOverflow) { IsSynchronous = true };
+
+                return _removeOverlflow;
+            }
+        }
+
         public ICommand ShowChildCommand
         {
             get
@@ -71,6 +83,13 @@ namespace SmsBuddy.ViewModels
                 _childrenCache[childVm] = view;
             }
             Child = view;
+        }
+
+        void RemoveOverflow(ToolBar toolbar)
+        {
+            var overflowGrid = toolbar.Template.FindName("OverflowGrid", toolbar) as FrameworkElement;
+            if (overflowGrid != null)
+                overflowGrid.Visibility = Visibility.Collapsed;
         }
 
         void Initialize()
