@@ -9,17 +9,11 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.Resources>
-            <Style x:Key="BaseStyle" TargetType="FrameworkElement">
-                <Setter Property="Margin" Value="2" />
-            </Style>
-            <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBlock" />
-            <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="TextBox" />
-            <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="ListBox" />
-            <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Button" />
-            <Style BasedOn="{StaticResource ResourceKey=BaseStyle}" TargetType="Image">
-                <Setter Property="Width" Value="18" />
-                <Setter Property="Height" Value="18" />
-            </Style>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="/Assets/Styles/SharedStyles.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -32,17 +26,17 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Name:" />
+
+        <Label Content="Name:" />
         <TextBox Grid.Column="1" Grid.ColumnSpan="3" />
 
-        <TextBlock Grid.Row="1" Text="Fields:" />
+        <Label Grid.Row="1" Content="Fields:" />
         <ListBox Grid.Row="1" Grid.Column="1" />
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.Resources>
                 <Style TargetType="StackPanel">
                     <Setter Property="Orientation" Value="Horizontal" />
                 </Style>
-
             </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -75,10 +69,10 @@
             </StackPanel>
         </Button>
 
-        <TextBlock
+        <Label
             Grid.Row="1"
             Grid.Column="2"
-            Text="Template:" />
+            Content="Template:" />
         <TextBox
             Grid.Row="1"
             Grid.RowSpan="2"
