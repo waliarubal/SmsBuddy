@@ -27,14 +27,16 @@
         <ItemsControl ItemsSource="{Binding Path=Children, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.ShowChildCommand}" CommandParameter="{Binding}">
+                    <Button
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}, Path=DataContext.ShowChildCommand, Mode=OneTime}"
+                        CommandParameter="{Binding}"
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                         <StackPanel Orientation="Horizontal">
                             <Image
                                 Width="18"
                                 Height="18"
-                                Margin="2"
-                                Source="{Binding Path=Icon, Mode=OneWay}" />
-                            <TextBlock Margin="2" Text="{Binding Path=Title, Mode=OneWay}" />
+                                Source="{Binding Path=Icon, Mode=OneTime}" />
+                            <TextBlock Text="{Binding Path=Title, Mode=OneTime}" />
                         </StackPanel>
                     </Button>
                 </DataTemplate>

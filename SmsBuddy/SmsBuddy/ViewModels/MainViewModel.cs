@@ -10,20 +10,22 @@ namespace SmsBuddy.ViewModels
 {
     class MainViewModel: ViewModelBase
     {
-        Dictionary<ChildViewModelBase, FrameworkElement> _children;
+        readonly Dictionary<ChildViewModelBase, FrameworkElement> _childrenCache;
+        IEnumerable<ChildViewModelBase> _children;
         FrameworkElement _child;
         ICommand _initialize, _showChild;
 
         public MainViewModel()
         {
-            _children = new Dictionary<ChildViewModelBase, FrameworkElement>();
+            _childrenCache = new Dictionary<ChildViewModelBase, FrameworkElement>();
         }
 
         #region properties
 
         public IEnumerable<ChildViewModelBase> Children
         {
-            get { return _children.Keys; }
+            get { return _children; }
+            private set { Set(nameof(Children), ref _children, value); }
         }
 
         public FrameworkElement Child
@@ -62,11 +64,11 @@ namespace SmsBuddy.ViewModels
 
         void ShowChild(ChildViewModelBase childVm)
         {
-            var view = _children[childVm];
+            var view = _childrenCache[childVm];
             if (view == null)
             {
                 view = childVm.GetView();
-                _children[childVm] = view;
+                _childrenCache[childVm] = view;
             }
             Child = view;
         }
@@ -75,7 +77,7 @@ namespace SmsBuddy.ViewModels
         {
             var vmBaseType = typeof(ChildViewModelBase);
 
-            _children.Clear();
+            _childrenCache.Clear();
             foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if (type.IsClass && type.IsSubclassOf(vmBaseType))
@@ -84,11 +86,10 @@ namespace SmsBuddy.ViewModels
                     if (childVm == null)
                         continue;
 
-                    _children.Add(childVm, null);
+                    _childrenCache.Add(childVm, null);
                 }
             }
-
-            RaisePropertyChanged(nameof(Children));
+            Children = _childrenCache.Keys;
         }
     }
 }
