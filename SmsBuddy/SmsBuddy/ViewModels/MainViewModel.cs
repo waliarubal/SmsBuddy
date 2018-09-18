@@ -79,7 +79,12 @@ namespace SmsBuddy.ViewModels
             var view = _childrenCache[childVm];
             if (view == null)
             {
-                view = childVm.GetView();
+                var dataVm = childVm as DataViewModelBase;
+                if (dataVm == null)
+                    view = childVm.GetView();
+                else
+                    view = dataVm.GetView();
+
                 _childrenCache[childVm] = view;
             }
             Child = view;
@@ -99,7 +104,7 @@ namespace SmsBuddy.ViewModels
             _childrenCache.Clear();
             foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (type.IsClass && type.IsSubclassOf(vmBaseType))
+                if (type.IsClass && !type.IsAbstract && type.IsSubclassOf(vmBaseType))
                 {
                     var childVm = Activator.CreateInstance(type) as ChildViewModelBase;
                     if (childVm == null)

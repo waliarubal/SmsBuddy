@@ -17,9 +17,7 @@ namespace SmsBuddy.Models
 
         #endregion
 
-        public abstract bool Insert();
-
-        public abstract bool Update();
+        public abstract bool Save();
 
         public abstract bool Delete();
 

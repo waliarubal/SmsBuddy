@@ -1,10 +1,17 @@
-﻿namespace SmsBuddy.ViewModels
+﻿using SmsBuddy.Models;
+
+namespace SmsBuddy.ViewModels
 {
-    class MessageViewModel: ChildViewModelBase
+    class MessageViewModel: DataViewModelBase
     {
         public MessageViewModel(): base("Message")
         {
             Icon = "/Assets/Images/sms-32.png";
+        }
+
+        protected override DataModelBase New(object argument)
+        {
+            return new MessageModel();
         }
     }
 }

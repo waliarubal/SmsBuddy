@@ -67,11 +67,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\DataModelBase.cs" />
+    <Compile Include="Models\MessageModel.cs" />
+    <Compile Include="Models\TemplateModel.cs" />
     <Compile Include="ViewModels\ChildViewModelBase.cs" />
     <Compile Include="ViewModels\DataViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
+    <Compile Include="Views\DataView.xaml.cs">
+      <DependentUpon>DataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -111,6 +116,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,7 +133,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Images\search-32.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\template-32.png" />
   </ItemGroup>
@@ -135,6 +146,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\sms-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\new-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\save-32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
