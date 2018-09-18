@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" MinHeight="320" />
+            <RowDefinition Height="*" MinHeight="220" />
         </Grid.RowDefinitions>
 
         <Label Content="Template:" />
