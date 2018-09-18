@@ -17,10 +17,10 @@ namespace SmsBuddy.Models
 
         #endregion
 
-        public abstract bool Save();
+        public abstract void Save();
 
-        public abstract bool Delete();
+        public abstract void Delete();
 
-        public abstract IEnumerable<DataModelBase> Get();
+        public abstract IEnumerable<DataModelBase> Get(string searchKeywoards);
     }
 }

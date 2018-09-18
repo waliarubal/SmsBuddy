@@ -5,17 +5,17 @@ namespace SmsBuddy.Models
 {
     class MessageModel : DataModelBase
     {
-        public override bool Delete()
+        public override void Delete()
         {
             throw new NotImplementedException();
         }
 
-        public override IEnumerable<DataModelBase> Get()
+        public override IEnumerable<DataModelBase> Get(string searchKeywoards)
         {
             throw new NotImplementedException();
         }
 
-        public override bool Save()
+        public override void Save()
         {
             throw new NotImplementedException();
         }
