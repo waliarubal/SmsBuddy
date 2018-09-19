@@ -1,4 +1,5 @@
 ﻿using NullVoidCreations.WpfHelpers.Base;
+using System.Collections.Generic;
 
 namespace SmsBuddy.Models
 {
@@ -15,5 +16,11 @@ namespace SmsBuddy.Models
         }
 
         #endregion
+
+        public abstract void Save();
+
+        public abstract void Delete();
+
+        public abstract IEnumerable<ModelBase> Get(string searchKeywoard);
     }
 }

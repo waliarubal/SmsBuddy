@@ -1,4 +1,4 @@
-﻿using NullVoidCreations.WpfHelpers.Base;
+﻿using System.Collections.Generic;
 
 namespace SmsBuddy.Models
 {
@@ -28,5 +28,20 @@ namespace SmsBuddy.Models
         }
 
         #endregion
+
+        public override void Delete()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override IEnumerable<ModelBase> Get(string searchKeywoard)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Save()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
