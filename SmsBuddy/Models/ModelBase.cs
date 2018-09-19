@@ -2,7 +2,7 @@
 
 namespace SmsBuddy.Models
 {
-    abstract class ModelBase: NotificationBase
+    public abstract class ModelBase: NotificationBase
     {
         long _id;
 

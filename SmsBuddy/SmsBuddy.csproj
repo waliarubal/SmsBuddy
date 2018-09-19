@@ -70,6 +70,7 @@
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\TemplateModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\RecordsViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>

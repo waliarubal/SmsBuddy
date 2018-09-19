@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SmsBuddy.Models;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SmsBuddy.Views
 {
@@ -19,9 +9,30 @@ namespace SmsBuddy.Views
     /// </summary>
     public partial class RecordsView : UserControl
     {
+        public static readonly DependencyProperty RecordProperty;
+
+        #region constructor/destructor
+
+        static RecordsView()
+        {
+            RecordProperty = DependencyProperty.Register(nameof(Record), typeof(ModelBase), typeof(RecordsView));
+        }
+
         public RecordsView()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region properties
+
+        public ModelBase Record
+        {
+            get { return (ModelBase)GetValue(RecordProperty); }
+            set { SetValue(RecordProperty, value); }
+        }
+
+        #endregion
     }
 }
