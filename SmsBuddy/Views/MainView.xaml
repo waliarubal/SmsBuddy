@@ -1,0 +1,33 @@
+﻿<Window
+    x:Class="SmsBuddy.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="clr-namespace:SmsBuddy.Views"
+    Title="MainView"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <TabControl TabStripPlacement="Left">
+        <TabControl.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/SmsBuddy;component/Assets/Styles/SharedStyle.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+            </ResourceDictionary>
+        </TabControl.Resources>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel>
+                    <Image Source="pack://application:,,,/SmsBuddy;component/Assets/Images/template-48.png" />
+                    <TextBlock Text="Template" />
+                </StackPanel>
+            </TabItem.Header>
+            <v:TemplateView />
+        </TabItem>
+    </TabControl>
+</Window>
