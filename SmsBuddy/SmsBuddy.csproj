@@ -77,6 +77,9 @@
     <Compile Include="Views\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RecordsView.xaml.cs">
+      <DependentUpon>RecordsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TemplateView.xaml.cs">
       <DependentUpon>TemplateView.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RecordsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TemplateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,6 +137,14 @@
     <Resource Include="Assets\Images\minus-48.png" />
     <Resource Include="Assets\Images\next-page-64.png" />
     <Resource Include="Assets\Images\plus-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\search-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\delete-64.png" />
+    <Resource Include="Assets\Images\new-48.png" />
+    <Resource Include="Assets\Images\save-48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
