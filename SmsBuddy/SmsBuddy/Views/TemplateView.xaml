@@ -22,15 +22,22 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" MinHeight="320" />
+            <RowDefinition Height="*" MinHeight="220" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label Content="Name:" />
-        <TextBox Grid.Column="1" Grid.ColumnSpan="3" />
+        <TextBox
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Text="{Binding Path=Record.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Row="1" Content="Fields:" />
-        <ListBox Grid.Row="1" Grid.Column="1" />
+        <ListBox
+            Grid.Row="1"
+            Grid.Column="1"
+            ItemsSource="{Binding Path=Record.Fields, Mode=OneWay}"
+            SelectedValue="{Binding Path=SelectedField, Mode=TwoWay}" />
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.Resources>
                 <Style TargetType="StackPanel">
@@ -43,8 +50,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox />
-            <Button Grid.Column="1">
+            <TextBox Text="{Binding Path=Field, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Grid.Column="1" Command="{Binding Path=AddCommand, Mode=OneTime}">
                 <StackPanel>
                     <Image Source="/Assets/Images/plus-32.png" />
                     <TextBlock Text="Add" />
@@ -75,6 +82,7 @@
         <TextBox
             Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.Column="3" />
+            Grid.Column="3"
+            Text="{Binding Path=Record.Template, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>
