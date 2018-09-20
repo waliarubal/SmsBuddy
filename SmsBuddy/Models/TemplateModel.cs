@@ -33,5 +33,10 @@ namespace SmsBuddy.Models
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

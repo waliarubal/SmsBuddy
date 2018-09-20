@@ -70,6 +70,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Shared.cs" />
+    <Compile Include="ViewModels\TemplateViewModel.cs" />
+    <Compile Include="Views\TemplateView.xaml.cs">
+      <DependentUpon>TemplateView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ModelBase.cs" />
@@ -98,9 +102,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
+    <Page Include="Views\TemplateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
