@@ -1,6 +1,8 @@
 ﻿using NullVoidCreations.WpfHelpers.Commands;
 using SmsBuddy.Models;
+using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
@@ -12,10 +14,7 @@ namespace SmsBuddy.ViewModels
         string _newField, _selectedField;
         ICommand _addField, _removeField, _addFieldToMessage, _new, _save, _delete, _refresh;
 
-        public TemplateViewModel(): base("Templates", "template-32.png")
-        {
-
-        }
+        public TemplateViewModel(): base("Templates", "template-32.png") { }
 
         #region properties
 
@@ -145,7 +144,14 @@ namespace SmsBuddy.ViewModels
             if (Template == null)
                 return;
 
-            Template.Save();
+            try
+            {
+                Template.Save();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         void Delete()

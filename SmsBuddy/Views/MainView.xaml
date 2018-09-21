@@ -34,13 +34,22 @@
             </ResourceDictionary>
         </Grid.Resources>
         <ToolBarTray Orientation="Vertical">
-            <ToolBar ItemsSource="{Binding ChildViewModels, Mode=OneWay}" ToolBarTray.IsLocked="True">
+            <ToolBar
+                x:Name="toolMain"
+                ItemsSource="{Binding ChildViewModels, Mode=OneWay}"
+                ToolBarTray.IsLocked="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding HideOverflowCommand, Mode=OneTime}" CommandParameter="{Binding ElementName=toolMain}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ToolBar.ItemTemplate>
                     <DataTemplate>
                         <Button
                             Command="{Binding RelativeSource={RelativeSource AncestorType=ToolBarTray, Mode=FindAncestor}, Path=DataContext.ShowChildViewCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
-                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                            ToolBar.OverflowMode="Never">
                             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                 <Image
                                     Width="32"

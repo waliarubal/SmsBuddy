@@ -14,6 +14,8 @@ namespace SmsBuddy
         static object _syncLock;
         static Shared _instance;
         LiteDatabase _database;
+        string _databaseFile, _startupDirectory;
+        AssemblyInformation _assemblyInformation;
 
         static Shared()
         {
@@ -22,9 +24,7 @@ namespace SmsBuddy
 
         private Shared()
         {
-            AssemblyInfo = new AssemblyInformation(Assembly.GetExecutingAssembly());
-            StartupDirectory = Application.Current.GetStartupDirectory();
-            DatabaseFile = Path.Combine(StartupDirectory, "Database.litedb");
+            
         }
 
         #region properties
@@ -43,11 +43,38 @@ namespace SmsBuddy
             }
         }
 
-        public AssemblyInformation AssemblyInfo { get; }
+        public AssemblyInformation AssemblyInfo
+        {
+            get
+            {
+                if (_assemblyInformation == null)
+                    _assemblyInformation = new AssemblyInformation(Assembly.GetExecutingAssembly());
 
-        public string StartupDirectory { get; }
+                return _assemblyInformation;
+            }
+        }
 
-        public string DatabaseFile { get; }
+        public string StartupDirectory
+        {
+            get
+            {
+                if (_startupDirectory == null)
+                    _startupDirectory = Application.Current.GetStartupDirectory();
+
+                return _startupDirectory;
+            }
+        }
+
+        public string DatabaseFile
+        {
+            get
+            {
+                if (_databaseFile == null)
+                    _databaseFile = Path.Combine(StartupDirectory, "Database.litedb");
+
+                return _databaseFile;
+            }
+        }
 
         public LiteDatabase Database
         {

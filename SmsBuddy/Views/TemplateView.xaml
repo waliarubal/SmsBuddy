@@ -141,7 +141,7 @@
             </Button>
             <Button Command="{Binding DeleteCommand, Mode=OneTime}">
                 <StackPanel>
-                    <Image Source="pack://application:,,,/Assets/Images/trash-32.png" />
+                    <Image Source="pack://application:,,,/Assets/Images/cancel-32.png" />
                     <TextBlock Text="Delete Selected Template" />
                 </StackPanel>
             </Button>

@@ -110,7 +110,6 @@
   <ItemGroup>
     <Resource Include="Assets\Images\new-32.png" />
     <Resource Include="Assets\Images\save-32.png" />
-    <Resource Include="Assets\Images\trash-32.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Assets\Styles\SharedStyle.xaml">
@@ -133,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\template-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\cancel-32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
