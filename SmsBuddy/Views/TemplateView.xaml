@@ -38,23 +38,44 @@
             <RowDefinition Height=".25*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListBox Grid.RowSpan="6" />
+        <ListBox
+            Grid.RowSpan="6"
+            ItemsSource="{Binding Templates, Mode=OneWay}"
+            SelectedValue="{Binding Template, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Source="pack://application:,,,/Assets/Images/template-32.png" />
+                        <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <Label Grid.Column="1" Content="Name:" />
-        <TextBox Grid.Column="2" Grid.ColumnSpan="3" />
+        <TextBox
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
+            Text="{Binding Template.Name, Mode=TwoWay}" />
 
         <Label
             Grid.Row="1"
             Grid.Column="1"
             Content="Fields:" />
         <TextBox Grid.Row="1" Grid.Column="2" />
-        <Button Grid.Row="1" Grid.Column="3">
+        <Button
+            Grid.Row="1"
+            Grid.Column="3"
+            Command="{Binding AddFieldCommand, Mode=OneTime}">
             <StackPanel>
                 <Image Source="pack://application:,,,/Assets/Images/plus-32.png" />
                 <TextBlock Text="Add" />
             </StackPanel>
         </Button>
-        <Button Grid.Row="1" Grid.Column="4">
+        <Button
+            Grid.Row="1"
+            Grid.Column="4"
+            Command="{Binding RemoveFieldCommand, Mode=OneTime}">
             <StackPanel>
                 <Image Source="pack://application:,,,/Assets/Images/minus-32.png" />
                 <TextBlock Text="Remove Selected" />
@@ -63,11 +84,14 @@
         <ListBox
             Grid.Row="2"
             Grid.Column="2"
-            Grid.ColumnSpan="3" />
+            Grid.ColumnSpan="3"
+            ItemsSource="{Binding Template.Fields, Mode=OneWay}"
+            SelectedValue="{Binding SelectedField, Mode=TwoWay}" />
         <Button
             Grid.Row="3"
             Grid.Column="2"
-            Grid.ColumnSpan="3">
+            Grid.ColumnSpan="3"
+            Command="{Binding AddFieldToMessageCommand, Mode=OneTime}">
             <StackPanel>
                 <Image Source="pack://application:,,,/Assets/Images/button-32.png" />
                 <TextBlock Text="Add Selected Field to Message" />
