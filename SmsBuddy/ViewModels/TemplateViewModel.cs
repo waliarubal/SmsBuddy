@@ -1,17 +1,21 @@
-﻿using NullVoidCreations.WpfHelpers.Base;
-using NullVoidCreations.WpfHelpers.Commands;
+﻿using NullVoidCreations.WpfHelpers.Commands;
 using SmsBuddy.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
 {
-    class TemplateViewModel: ViewModelBase
+    class TemplateViewModel: ChildViewModelBase
     {
         TemplateModel _template;
         ObservableCollection<TemplateModel> _templates;
         string _newField, _selectedField;
-        ICommand _addField, _removeField, _addFieldToMessage;
+        ICommand _addField, _removeField, _addFieldToMessage, _new, _save, _delete, _refresh;
+
+        public TemplateViewModel(): base("Templates", "template-32.png")
+        {
+
+        }
 
         #region properties
 
@@ -76,14 +80,88 @@ namespace SmsBuddy.ViewModels
             }
         }
 
+        public ICommand NewCommand
+        {
+            get
+            {
+                if (_new == null)
+                    _new = new RelayCommand(New);
+
+                return _new;
+            }
+        }
+
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (_save == null)
+                    _save = new RelayCommand(Save);
+
+                return _save;
+            }
+        }
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_delete == null)
+                    _delete = new RelayCommand(Delete);
+
+                return _delete;
+            }
+        }
+
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                if (_refresh == null)
+                    _refresh = new RelayCommand<object, ObservableCollection<TemplateModel>>(Refresh, (templates) => Templates = templates) { IsCallbackSynchronous = true };
+
+                return _refresh;
+            }
+        }
+
         #endregion
+
+        ObservableCollection<TemplateModel> Refresh(object argument)
+        {
+            var templates = new ObservableCollection<TemplateModel>();
+            foreach (var template in new TemplateModel().Get())
+                templates.Add(template as TemplateModel);
+
+            return templates;
+        }
+
+        void New()
+        {
+            Template = new TemplateModel();
+        }
+
+        void Save()
+        {
+            if (Template == null)
+                return;
+
+            Template.Save();
+        }
+
+        void Delete()
+        {
+            if (Template == null)
+                return;
+
+            Template.Delete();
+        }
 
         void AddField()
         {
             if (Template == null || Template.Fields.Contains(NewField))
                 return;
 
-            Template.Fields.Contains(NewField);
+            Template.Fields.Add(NewField);
             NewField = null;
         }
 

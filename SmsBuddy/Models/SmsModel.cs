@@ -1,6 +1,8 @@
-﻿namespace SmsBuddy.Models
+﻿using NullVoidCreations.WpfHelpers.Base;
+
+namespace SmsBuddy.Models
 {
-    class SmsModel: ModelBase
+    class SmsModel: NotificationBase
     {
         string _mobileNumber, _message;
         TemplateModel _template;

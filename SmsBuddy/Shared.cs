@@ -3,13 +3,17 @@ using NullVoidCreations.WpfHelpers;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 
 namespace SmsBuddy
 {
     class Shared
     {
+        const string PASSWORD = "!Control*88";
+
         static object _syncLock;
         static Shared _instance;
+        LiteDatabase _database;
 
         static Shared()
         {
@@ -19,8 +23,8 @@ namespace SmsBuddy
         private Shared()
         {
             AssemblyInfo = new AssemblyInformation(Assembly.GetExecutingAssembly());
-            DatabaseFile = Path.Combine(App.Current.GetStartupDirectory(), "Assets", "Database.db");
-            
+            StartupDirectory = Application.Current.GetStartupDirectory();
+            DatabaseFile = Path.Combine(StartupDirectory, "Database.litedb");
         }
 
         #region properties
@@ -33,32 +37,47 @@ namespace SmsBuddy
                 {
                     if (_instance == null)
                         _instance = new Shared();
-                }
 
-                return _instance;
+                    return _instance;
+                } 
             }
         }
 
         public AssemblyInformation AssemblyInfo { get; }
 
+        public string StartupDirectory { get; }
+
         public string DatabaseFile { get; }
+
+        public LiteDatabase Database
+        {
+            get
+            {
+                if (_database == null)
+                    _database = GetDatabase();
+
+                return _database;
+            }
+        }
 
         #endregion
 
-        public LiteDatabase GetDatabase()
+        LiteDatabase GetDatabase()
         {
-            var connectionString = new ConnectionString();
-            connectionString.CacheSize = 5000;
-            connectionString.Filename = DatabaseFile;
-            connectionString.Flush = true;
-            connectionString.InitialSize = 0;
-            connectionString.Journal = true;
-            connectionString.Log = Logger.NONE;
-            connectionString.Mode = LiteDB.FileMode.Shared;
-            connectionString.Password = null;
-            connectionString.Timeout = TimeSpan.FromMinutes(5);
-            connectionString.Upgrade = true;
-            connectionString.UtcDate = false;
+            var connectionString = new ConnectionString
+            {
+                CacheSize = 5000,
+                Filename = DatabaseFile,
+                Flush = true,
+                InitialSize = 0,
+                Journal = true,
+                Log = Logger.NONE,
+                Mode = LiteDB.FileMode.Shared,
+                Password = PASSWORD,
+                Timeout = TimeSpan.FromMinutes(5),
+                Upgrade = true,
+                UtcDate = false
+            };
 
             var database = new LiteDatabase(connectionString);
             return database;

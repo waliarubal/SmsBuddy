@@ -1,10 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using LiteDB;
+using NullVoidCreations.WpfHelpers.Base;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SmsBuddy.Models
 {
-    class TemplateModel: ModelBase
+    class TemplateModel: NotificationBase, IModel
     {
         string _name, _message;
+        long _id;
         ObservableCollection<string> _fields;
 
         public TemplateModel()
@@ -13,6 +17,13 @@ namespace SmsBuddy.Models
         }
 
         #region properties
+
+        [BsonId(true)]
+        public long Id
+        {
+            get { return _id; }
+            set { Set(nameof(Id), ref _id, value); }
+        }
 
         public string Name
         {
@@ -33,6 +44,39 @@ namespace SmsBuddy.Models
         }
 
         #endregion
+
+        public bool Delete()
+        {
+            using (var db = Shared.Instance.Database)
+            {
+                var collection = db.GetCollection<TemplateModel>();
+                return collection.Delete(Id);
+            }
+        }
+
+        public IEnumerable<IModel> Get()
+        {
+            IEnumerable<TemplateModel> templates;
+            using (var db = Shared.Instance.Database)
+            {
+               templates = db.GetCollection<TemplateModel>().FindAll();
+            }
+            return templates;
+        }
+
+        public bool Save()
+        {
+            using (var db = Shared.Instance.Database)
+            {
+                var collection = db.GetCollection<TemplateModel>();
+                var isSaved = collection.Update(this);
+                if (isSaved)
+                    return isSaved;
+
+                Id = collection.Insert(this);
+                return true;
+            }
+        }
 
         public override string ToString()
         {
