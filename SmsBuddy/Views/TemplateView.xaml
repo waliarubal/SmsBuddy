@@ -11,14 +11,103 @@
     <UserControl.DataContext>
         <vm:TemplateViewModel />
     </UserControl.DataContext>
+
     <Grid>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/Assets/Styles/SharedStyle.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ListBox />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height=".25*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListBox Grid.RowSpan="6" />
 
         <Label Grid.Column="1" Content="Name:" />
+        <TextBox Grid.Column="2" Grid.ColumnSpan="3" />
+
+        <Label
+            Grid.Row="1"
+            Grid.Column="1"
+            Content="Fields:" />
+        <TextBox Grid.Row="1" Grid.Column="2" />
+        <Button Grid.Row="1" Grid.Column="3">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Assets/Images/plus-32.png" />
+                <TextBlock Text="Add" />
+            </StackPanel>
+        </Button>
+        <Button Grid.Row="1" Grid.Column="4">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Assets/Images/minus-32.png" />
+                <TextBlock Text="Remove Selected" />
+            </StackPanel>
+        </Button>
+        <ListBox
+            Grid.Row="2"
+            Grid.Column="2"
+            Grid.ColumnSpan="3" />
+        <Button
+            Grid.Row="3"
+            Grid.Column="2"
+            Grid.ColumnSpan="3">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Assets/Images/button-32.png" />
+                <TextBlock Text="Add Selected Field to Message" />
+            </StackPanel>
+        </Button>
+
+        <Label
+            Grid.Row="4"
+            Grid.Column="1"
+            Content="Message:" />
+        <TextBox
+            Grid.Row="4"
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Visible" />
+
+        <StackPanel
+            Grid.Row="5"
+            Grid.Column="1"
+            Grid.ColumnSpan="4"
+            HorizontalAlignment="Right">
+            <Button>
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/save-32.png" />
+                    <TextBlock Text="Save Template" />
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/new-32.png" />
+                    <TextBlock Text="New Template" />
+                </StackPanel>
+            </Button>
+            <Button>
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/trash-32.png" />
+                    <TextBlock Text="Delete Selected Template" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

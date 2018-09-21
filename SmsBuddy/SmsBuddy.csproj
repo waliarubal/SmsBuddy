@@ -102,12 +102,25 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Resource Include="Assets\Images\new-32.png" />
+    <Resource Include="Assets\Images\save-32.png" />
+    <Resource Include="Assets\Images\trash-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Assets\Styles\SharedStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TemplateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\button-32.png" />
+    <Resource Include="Assets\Images\minus-32.png" />
+    <Resource Include="Assets\Images\plus-32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
