@@ -52,8 +52,8 @@
                             ToolBar.OverflowMode="Never">
                             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                 <Image
-                                    Width="32"
-                                    Height="32"
+                                    Width="22"
+                                    Height="22"
                                     Source="{Binding Icon, Mode=OneTime}" />
                                 <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=OneTime}" />
                             </StackPanel>
