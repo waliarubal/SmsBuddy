@@ -128,6 +128,7 @@ namespace SmsBuddy.ViewModels
         ObservableCollection<TemplateModel> Refresh(object argument)
         {
             var templates = new ObservableCollection<TemplateModel>();
+
             foreach (var template in new TemplateModel().Get())
                 templates.Add(template as TemplateModel);
 
