@@ -14,6 +14,7 @@
     </UserControl.DataContext>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding NewCommand, Mode=OneTime}" />
             <i:InvokeCommandAction Command="{Binding RefreshCommand, Mode=OneTime}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
@@ -46,7 +47,10 @@
             ItemsSource="{Binding Templates, Mode=OneWay}"
             SelectedValue="{Binding Sms.Template, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding Fields, Mode=OneWay}">
+        <ItemsControl
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding Sms.Fields, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>

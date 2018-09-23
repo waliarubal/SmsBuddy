@@ -1,8 +1,6 @@
 ﻿using NullVoidCreations.WpfHelpers.Commands;
-using NullVoidCreations.WpfHelpers.DataStructures;
 using SmsBuddy.Models;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
@@ -10,18 +8,12 @@ namespace SmsBuddy.ViewModels
     class SmsViewModel: ChildViewModelBase
     {
         SmsModel _sms;
-        IEnumerable<Doublet<string, string>> _fields;
         IEnumerable<TemplateModel> _templates;
-        ICommand _refresh;
+        ICommand _refresh, _new;
 
         public SmsViewModel() : base("Messages", "sms-32.png")
         {
-            PropertyChanged += SmsViewModel_PropertyChanged;
-        }
-
-        ~SmsViewModel()
-        {
-            PropertyChanged -= SmsViewModel_PropertyChanged;
+            
         }
 
         #region properties
@@ -30,12 +22,6 @@ namespace SmsBuddy.ViewModels
         {
             get { return _sms; }
             set { Set(nameof(Sms), ref _sms, value); }
-        }
-
-        public IEnumerable<Doublet<string, string>> Fields
-        {
-            get { return _fields; }
-            private set { Set(nameof(Fields), ref _fields, value); }
         }
 
         public IEnumerable<TemplateModel> Templates
@@ -59,14 +45,22 @@ namespace SmsBuddy.ViewModels
             }
         }
 
+        public ICommand NewCommand
+        {
+            get
+            {
+                if (_new == null)
+                    _new = new RelayCommand(New);
+
+                return _new;
+            }
+        }
+
         #endregion
 
-        void SmsViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        void New()
         {
-            switch(e.PropertyName)
-            {
-
-            }
+            Sms = new SmsModel();
         }
 
         void Refresh()

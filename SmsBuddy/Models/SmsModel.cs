@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LiteDB;
 using NullVoidCreations.WpfHelpers.Base;
+using NullVoidCreations.WpfHelpers.DataStructures;
 
 namespace SmsBuddy.Models
 {
@@ -11,6 +12,7 @@ namespace SmsBuddy.Models
         long _id;
         bool _repeatDaily;
         TemplateModel _template;
+        IEnumerable<Doublet<string, string>> _fields;
 
         #region properties
 
@@ -30,7 +32,18 @@ namespace SmsBuddy.Models
         public TemplateModel Template
         {
             get { return _template; }
-            set { Set(nameof(Template), ref _template, value); }
+            set
+            {
+                if(Set(nameof(Template), ref _template, value) && 
+                    value != null && 
+                    value.Fields != null)
+                {
+                    var fields = new List<Doublet<string, string>>();
+                    foreach (var field in value.Fields)
+                        fields.Add(new Doublet<string, string>(field, null));
+                    Fields = fields;
+                }
+            }
         }
 
         public string Message
@@ -43,6 +56,12 @@ namespace SmsBuddy.Models
         {
             get { return _repeatDaily; }
             set { Set(nameof(RepeatDaily), ref _repeatDaily, value); }
+        }
+
+        public IEnumerable<Doublet<string, string>> Fields
+        {
+            get { return _fields; }
+            private set { Set(nameof(Fields), ref _fields, value); }
         }
 
         #endregion
