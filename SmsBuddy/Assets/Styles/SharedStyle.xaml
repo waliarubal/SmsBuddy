@@ -33,5 +33,6 @@
         <Setter Property="HeadersVisibility" Value="Column" />
         <Setter Property="GridLinesVisibility" Value="None" />
         <Setter Property="AlternatingRowBackground" Value="WhiteSmoke" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
     </Style>
 </ResourceDictionary>

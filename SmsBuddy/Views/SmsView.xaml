@@ -127,7 +127,7 @@
             SelectedValue="{Binding Sms, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding MobileNumber}" Header="Mobile Number" />
-                <DataGridTextColumn Binding="{Binding Tenplate}" Header="Template" />
+                <DataGridTextColumn Binding="{Binding Template}" Header="Template" />
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Message}"
