@@ -145,7 +145,7 @@
                     Grid.Row="4"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
-                    MaxLength="{Binding MaxMessageLength, Mode=OneTime}"
+                    MaxLength="{Binding Template.MaxLength, Mode=OneWay}"
                     Text="{Binding Template.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Visible" />
@@ -153,7 +153,7 @@
                     Grid.Row="5"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
-                    Text="{Binding RemainingMessageLength, Mode=OneWay, StringFormat='Approximate {0} characters are left.'}" />
+                    Text="{Binding Template.RemainingLength, Mode=OneWay, StringFormat='Approximate {0} characters are left.'}" />
             </Grid>
         </GroupBox>
 

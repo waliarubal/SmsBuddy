@@ -44,7 +44,7 @@ namespace SmsBuddy.Models
                     foreach (var field in value.Fields)
                     {
                         var messageField = new Doublet<string, string>(field, null);
-                        messageField.PropertyChanged += (object sender, PropertyChangedEventArgs e) => RaisePropertyChanged(nameof(ProcessedMessage));
+                        messageField.PropertyChanged += (object sender, PropertyChangedEventArgs e) => Message = GetMessage();
                         fields.Add(messageField);
                     }
                         
@@ -53,15 +53,10 @@ namespace SmsBuddy.Models
             }
         }
 
-        public string ProcessedMessage
-        {
-            get { return GetMessage(); }
-        }
-
         public string Message
         {
             get { return _message; }
-            set { Set(nameof(Message), ref _message, value); }
+            private set { Set(nameof(Message), ref _message, value); }
         }
 
         public bool RepeatDaily
@@ -80,10 +75,10 @@ namespace SmsBuddy.Models
 
         string GetMessage()
         {
-            if (Message == null || Fields == null)
+            if (Template == null || Template.Message == null || Fields == null)
                 return string.Empty;
 
-            var messageBuilder = new StringBuilder(Message);
+            var messageBuilder = new StringBuilder(Template.Message);
             foreach (var field in Fields)
                 messageBuilder.Replace(string.Format("<<{0}>>", field.First), field.Second);
             return messageBuilder.ToString();

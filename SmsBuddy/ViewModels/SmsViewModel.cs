@@ -9,12 +9,10 @@ namespace SmsBuddy.ViewModels
     {
         SmsModel _sms;
         IEnumerable<TemplateModel> _templates;
-        ICommand _refresh, _new;
+        IEnumerable<SmsModel> _messages;
+        ICommand _refresh, _new, _send, _save, _delete;
 
-        public SmsViewModel() : base("Messages", "sms-32.png")
-        {
-            
-        }
+        public SmsViewModel() : base("Messages", "sms-32.png") { }
 
         #region properties
 
@@ -28,6 +26,12 @@ namespace SmsBuddy.ViewModels
         {
             get { return _templates; }
             private set { Set(nameof(Templates), ref _templates, value); }
+        }
+
+        public IEnumerable<SmsModel> Messages
+        {
+            get { return _messages; }
+            private set { Set(nameof(Messages), ref _messages, value); }
         }
 
         #endregion
@@ -56,16 +60,91 @@ namespace SmsBuddy.ViewModels
             }
         }
 
+        public ICommand SaveCommand
+        {
+            get
+            {
+                if (_save == null)
+                    _save = new RelayCommand(Save);
+
+                return _save;
+            }
+        }
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (_delete == null)
+                    _delete = new RelayCommand(Send);
+
+                return _delete;
+            }
+        }
+
+        public ICommand SendCommand
+        {
+            get
+            {
+                if (_send == null)
+                    _send = new RelayCommand(Send);
+
+                return _send;
+            }
+        }
+
         #endregion
+
+        void Delete()
+        {
+            ErrorMessage = null;
+
+            if (Sms == null)
+                ErrorMessage = "Select or create a new message first.";
+            else
+            {
+                Sms.Delete();
+                New();
+                Refresh();
+            }
+        }
 
         void New()
         {
+            ErrorMessage = null;
             Sms = new SmsModel();
+        }
+
+        void Save()
+        {
+            ErrorMessage = null;
+
+            if (Sms == null)
+                ErrorMessage = "Select or create a new message.";
+            else if (string.IsNullOrEmpty(Sms.MobileNumber))
+                ErrorMessage = "Mobile number not specified.";
+            else if (Sms.Template == null)
+                ErrorMessage = "Template not selected.";
+            else if (string.IsNullOrEmpty(Sms.Message))
+                ErrorMessage = "Message not specified.";
+            else
+            {
+                Sms.Save();
+                New();
+                Refresh();
+            }
+        }
+
+        void Send()
+        {
+            ErrorMessage = null;
         }
 
         void Refresh()
         {
+            ErrorMessage = null;
             Templates = new TemplateModel().Get() as IEnumerable<TemplateModel>;
+            Messages = new SmsModel().Get() as IEnumerable<SmsModel>;
         }
     }
 }

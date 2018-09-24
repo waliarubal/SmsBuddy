@@ -24,14 +24,20 @@
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="pack://application:,,,/Assets/Styles/SharedStyle.xaml" />
                 </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
             </ResourceDictionary>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height=".25*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
@@ -70,12 +76,63 @@
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
-            Text="{Binding Sms.ProcessedMessage, Mode=OneWay}"
+            IsReadOnly="True"
+            Text="{Binding Sms.Message, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Visible" />
         <TextBlock
             Grid.Row="4"
             Grid.Column="1"
-            Text="{Binding Sms.ProcessedMessage.Length, Mode=OneWay, StringFormat='Message is {0} characters long.'}" />
+            Text="{Binding Sms.Message.Length, Mode=OneWay, StringFormat='Message is {0} characters long.', FallbackValue='Message is 0 characters long.'}" />
+
+        <Label Grid.Row="5" Content="Schedule:" />
+        <CheckBox
+            Grid.Row="5"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            Content="Send message every day."
+            IsChecked="{Binding Sms.RepeatDaily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2">
+            <Button Command="{Binding SaveCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/save-32.png" />
+                    <TextBlock Text="Save" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding NewCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/new-32.png" />
+                    <TextBlock Text="New" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding DeleteCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/cancel-32.png" />
+                    <TextBlock Text="Delete Selected" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding SendCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/sms-32.png" />
+                    <TextBlock Text="Send SMS Now" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <DataGrid
+            Grid.Row="7"
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding Messages, Mode=OneWay}"
+            SelectedValue="{Binding Sms, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding MobileNumber}" Header="Mobile Number" />
+                <DataGridTextColumn Binding="{Binding Tenplate}" Header="Template" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Message}"
+                    Header="Message" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

@@ -1,9 +1,6 @@
 ﻿using NullVoidCreations.WpfHelpers.Commands;
 using SmsBuddy.Models;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
@@ -11,7 +8,7 @@ namespace SmsBuddy.ViewModels
     class TemplateViewModel: ChildViewModelBase
     {
         TemplateModel _template;
-        ObservableCollection<TemplateModel> _templates;
+        IEnumerable<TemplateModel> _templates;
         string _newField, _selectedField;
         ICommand _addField, _removeField, _addFieldToMessage, _new, _save, _delete, _refresh;
 
@@ -19,37 +16,16 @@ namespace SmsBuddy.ViewModels
 
         #region properties
 
-        public int MaxMessageLength
-        {
-            get { return 160; }
-        }
-
-        public int RemainingMessageLength
-        {
-            get { return MaxMessageLength - (Template == null || string.IsNullOrWhiteSpace(Template.Message) ? 0 : Template.Message.Length); }
-        }
-
         public TemplateModel Template
         {
             get { return _template; }
-            set
-            {
-                var oldTemplate = _template;
-                if(Set(nameof(Template), ref _template, value))
-                {
-                    if (oldTemplate != null)
-                        oldTemplate.PropertyChanged -= OnTemplatePropertyChanged;
-
-                    if (value != null)
-                        value.PropertyChanged += OnTemplatePropertyChanged;
-                }
-            }
+            set { Set(nameof(Template), ref _template, value); }
         }
 
-        public ObservableCollection<TemplateModel> Templates
+        public IEnumerable<TemplateModel> Templates
         {
             get { return _templates; }
-            set { Set(nameof(Templates), ref _templates, value); }
+            private set { Set(nameof(Templates), ref _templates, value); }
         }
 
         public string NewField
@@ -139,7 +115,7 @@ namespace SmsBuddy.ViewModels
             get
             {
                 if (_refresh == null)
-                    _refresh = new RelayCommand<object, ObservableCollection<TemplateModel>>(Refresh, (templates) => Templates = templates) { IsCallbackSynchronous = true };
+                    _refresh = new RelayCommand(Refresh);
 
                 return _refresh;
             }
@@ -147,73 +123,90 @@ namespace SmsBuddy.ViewModels
 
         #endregion
 
-        void OnTemplatePropertyChanged(object sender, PropertyChangedEventArgs e)
+        void Refresh()
         {
-            RaisePropertyChanged(nameof(RemainingMessageLength));
-        }
-
-        ObservableCollection<TemplateModel> Refresh(object argument)
-        {
-            var templates = new ObservableCollection<TemplateModel>();
-
-            foreach (var template in new TemplateModel().Get())
-                templates.Add(template as TemplateModel);
-
-            return templates;
+            ErrorMessage = null;
+            Templates = new TemplateModel().Get() as IEnumerable<TemplateModel>;
         }
 
         void New()
         {
+            ErrorMessage = null;
             Template = new TemplateModel();
         }
 
         void Save()
         {
-            if (Template == null)
-                return;
+            ErrorMessage = null;
 
-            try
+            if (Template == null)
+                ErrorMessage = "Select or create a new template first.";
+            else if (string.IsNullOrEmpty(Template.Name))
+                ErrorMessage = "Name not specified.";
+            else if (string.IsNullOrEmpty(Template.Message))
+                ErrorMessage = "Message not specified.";
+            else
             {
                 Template.Save();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                New();
+                Refresh();
             }
         }
 
         void Delete()
         {
-            if (Template == null)
-                return;
+            ErrorMessage = null;
 
-            Template.Delete();
+            if (Template == null)
+                ErrorMessage = "Select or create a new template first.";
+            else
+            {
+                Template.Delete();
+                New();
+                Refresh();
+            }
         }
 
         void AddField()
         {
-            if (Template == null || Template.Fields.Contains(NewField))
-                return;
+            ErrorMessage = null;
 
-            Template.Fields.Add(NewField);
-            NewField = null;
+            if (Template == null)
+                ErrorMessage = "Select or create a new template first.";
+            else if (string.IsNullOrEmpty(NewField))
+                ErrorMessage = "New field can't be empty.";
+            else if (Template.Fields.Contains(NewField))
+                ErrorMessage = "Field with given name already exists.";
+            else
+            {
+                Template.Fields.Add(NewField);
+                NewField = null;
+            }
         }
 
         void RemoveField()
         {
-            if (Template == null || !Template.Fields.Contains(SelectedField))
-                return;
+            ErrorMessage = null;
 
-            Template.Fields.Remove(SelectedField);
-            SelectedField = null;
+            if (Template == null)
+                ErrorMessage = "Select or create a new template first.";
+            else if (!Template.Fields.Contains(SelectedField))
+                ErrorMessage = "Selected fiedl does not exist.";
+            else
+            {
+                Template.Fields.Remove(SelectedField);
+                SelectedField = null;
+            }
         }
 
         void AddFieldToMessage()
         {
-            if (Template == null || string.IsNullOrWhiteSpace(SelectedField))
-                return;
+            ErrorMessage = null;
 
-            Template.Message = string.Format("{0}<<{1}>>", Template.Message, SelectedField);
+            if (Template == null)
+                ErrorMessage = "Select or create a new template first.";
+            else
+                Template.Message = string.Format("{0}<<{1}>>", Template.Message, SelectedField);
         }
     }
 }

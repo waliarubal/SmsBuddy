@@ -70,13 +70,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\SentSmsModel.cs" />
     <Compile Include="Shared.cs" />
     <Compile Include="ViewModels\ChildViewModelBase.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SentSmsViewModel.cs" />
     <Compile Include="ViewModels\SmsViewModel.cs" />
     <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SentSmsView.xaml.cs">
+      <DependentUpon>SentSmsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SmsView.xaml.cs">
       <DependentUpon>SmsView.xaml</DependentUpon>
@@ -124,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SentSmsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SmsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\sms-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\outbox-32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

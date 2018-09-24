@@ -14,6 +14,7 @@ namespace SmsBuddy.ViewModels
         ICommand _initialize, _showChildView, _hideOverflow;
         Dictionary<string, FrameworkElement> _childViews;
         FrameworkElement _child;
+        ChildViewModelBase _childViewModel;
         IEnumerable<ChildViewModelBase> _children;
 
         #region properties
@@ -28,6 +29,12 @@ namespace SmsBuddy.ViewModels
         {
             get { return _child; }
             private set { Set(nameof(ChildView), ref _child, value); }
+        }
+
+        public ChildViewModelBase ChildViewModel
+        {
+            get { return _childViewModel; }
+            private set { Set(nameof(ChildViewModel), ref _childViewModel, value); }
         }
 
         #endregion
@@ -87,6 +94,7 @@ namespace SmsBuddy.ViewModels
                 _childViews[viewModel.Name] = view;
             }
             ChildView = view;
+            ChildViewModel = viewModel;
         }
 
         void Initialize()

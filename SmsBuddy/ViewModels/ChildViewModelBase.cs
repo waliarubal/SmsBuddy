@@ -4,6 +4,8 @@ namespace SmsBuddy.ViewModels
 {
     abstract class ChildViewModelBase: ViewModelBase
     {
+        string _errorMessage;
+
         protected ChildViewModelBase(string name, string iconFile)
         {
             Name = name;
@@ -11,6 +13,21 @@ namespace SmsBuddy.ViewModels
         }
 
         #region properties
+        
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            protected set
+            {
+                if (Set(nameof(ErrorMessage), ref _errorMessage, value))
+                    RaisePropertyChanged(nameof(IsHavingError));
+            }
+        }
+
+        public bool IsHavingError
+        {
+            get { return !string.IsNullOrEmpty(ErrorMessage); }
+        }
 
         public string Name { get; }
 

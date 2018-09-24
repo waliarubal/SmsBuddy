@@ -1,6 +1,5 @@
 ﻿using LiteDB;
 using NullVoidCreations.WpfHelpers.Base;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -41,7 +40,21 @@ namespace SmsBuddy.Models
         public string Message
         {
             get { return _message; }
-            set { Set(nameof(Message), ref _message, value); }
+            set
+            {
+                if (Set(nameof(Message), ref _message, value))
+                    RaisePropertyChanged(nameof(RemainingLength));
+            }
+        }
+
+        public int MaxLength
+        {
+            get { return 160; }
+        }
+
+        public int RemainingLength
+        {
+            get { return MaxLength - (string.IsNullOrWhiteSpace(Message) ? 0 : Message.Length); }
         }
 
         #endregion
@@ -61,11 +74,6 @@ namespace SmsBuddy.Models
 
         public bool Save()
         {
-            if (string.IsNullOrEmpty(Name))
-                throw new Exception("Name not specified.");
-            else if (string.IsNullOrEmpty(Message))
-                throw new Exception("Message not specified.");
-
             var db = Shared.Instance.Database;
             var collection = db.GetCollection<TemplateModel>();
             var isSaved = collection.Update(this);

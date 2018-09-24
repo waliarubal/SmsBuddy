@@ -6,7 +6,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:SmsBuddy.ViewModels"
-    Title="SMS Buddy"
+    Title="{Binding ChildViewModel.Name, Mode=OneWay, StringFormat='SMS Buddy - {0}', FallbackValue='SMS Buddy'}"
     Width="800"
     Height="600"
     MinWidth="800"
@@ -26,6 +26,10 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
@@ -33,7 +37,8 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
-        <ToolBarTray Orientation="Vertical">
+
+        <ToolBarTray Grid.RowSpan="2" Orientation="Vertical">
             <ToolBar
                 x:Name="toolMain"
                 ItemsSource="{Binding ChildViewModels, Mode=OneWay}"
@@ -46,16 +51,20 @@
                 <ToolBar.ItemTemplate>
                     <DataTemplate>
                         <Button
+                            HorizontalAlignment="Left"
                             Command="{Binding RelativeSource={RelativeSource AncestorType=ToolBarTray, Mode=FindAncestor}, Path=DataContext.ShowChildViewCommand, Mode=OneTime}"
                             CommandParameter="{Binding}"
                             Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
                             ToolBar.OverflowMode="Never">
-                            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
                                 <Image
                                     Width="22"
                                     Height="22"
                                     Source="{Binding Icon, Mode=OneTime}" />
-                                <TextBlock VerticalAlignment="Center" Text="{Binding Name, Mode=OneTime}" />
+                                <TextBlock
+                                    Margin="2"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Name, Mode=OneTime}" />
                             </StackPanel>
                         </Button>
                     </DataTemplate>
@@ -67,5 +76,14 @@
             Grid.Column="1"
             Margin="4"
             Content="{Binding Path=ChildView, Mode=OneWay}" />
+
+        <StatusBar Grid.Row="1" Grid.Column="1">
+            <TextBlock
+                FontWeight="Bold"
+                Foreground="Red"
+                Text="{Binding ChildViewModel.ErrorMessage, Mode=OneWay}" />
+
+        </StatusBar>
+
     </Grid>
 </Window>
