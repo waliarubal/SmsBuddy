@@ -27,6 +27,12 @@ namespace SmsBuddy
             
         }
 
+        ~Shared()
+        {
+            if (Database != null)
+                Database.Dispose();
+        }
+
         #region properties
 
         public static Shared Instance

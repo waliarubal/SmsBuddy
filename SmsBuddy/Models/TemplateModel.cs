@@ -48,21 +48,15 @@ namespace SmsBuddy.Models
 
         public bool Delete()
         {
-            using (var db = Shared.Instance.Database)
-            {
-                var collection = db.GetCollection<TemplateModel>();
-                return collection.Delete(Id);
-            }
+            var db = Shared.Instance.Database;
+            var collection = db.GetCollection<TemplateModel>();
+            return collection.Delete(Id);
         }
 
         public IEnumerable<IModel> Get()
         {
-            IEnumerable<TemplateModel> templates;
-            using (var db = Shared.Instance.Database)
-            {
-               templates = db.GetCollection<TemplateModel>().FindAll();
-            }
-            return templates;
+            var db = Shared.Instance.Database;
+            return db.GetCollection<TemplateModel>().FindAll();
         }
 
         public bool Save()
@@ -72,16 +66,14 @@ namespace SmsBuddy.Models
             else if (string.IsNullOrEmpty(Message))
                 throw new Exception("Message not specified.");
 
-            using (var db = Shared.Instance.Database)
-            {
-                var collection = db.GetCollection<TemplateModel>();
-                var isSaved = collection.Update(this);
-                if (isSaved)
-                    return isSaved;
+            var db = Shared.Instance.Database;
+            var collection = db.GetCollection<TemplateModel>();
+            var isSaved = collection.Update(this);
+            if (isSaved)
+                return isSaved;
 
-                Id = collection.Insert(this);
-                return true;
-            }
+            Id = collection.Insert(this);
+            return true;
         }
 
         public override string ToString()

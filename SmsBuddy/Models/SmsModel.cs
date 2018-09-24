@@ -68,21 +68,15 @@ namespace SmsBuddy.Models
 
         public bool Delete()
         {
-            using (var db = Shared.Instance.Database)
-            {
-                var collection = db.GetCollection<SmsModel>();
-                return collection.Delete(Id);
-            }
+            var db = Shared.Instance.Database;
+            var collection = db.GetCollection<SmsModel>();
+            return collection.Delete(Id);
         }
 
         public IEnumerable<IModel> Get()
         {
-            IEnumerable<SmsModel> sms;
-            using (var db = Shared.Instance.Database)
-            {
-                sms = db.GetCollection<SmsModel>().FindAll();
-            }
-            return sms;
+            var db = Shared.Instance.Database;
+            return db.GetCollection<SmsModel>().FindAll();
         }
 
         public bool Save()
@@ -92,16 +86,14 @@ namespace SmsBuddy.Models
             else if (string.IsNullOrEmpty(Message))
                 throw new Exception("Message not specified.");
 
-            using (var db = Shared.Instance.Database)
-            {
-                var collection = db.GetCollection<SmsModel>();
-                var isSaved = collection.Update(this);
-                if (isSaved)
-                    return isSaved;
+            var db = Shared.Instance.Database;
+            var collection = db.GetCollection<SmsModel>();
+            var isSaved = collection.Update(this);
+            if (isSaved)
+                return isSaved;
 
-                Id = collection.Insert(this);
-                return true;
-            }
+            Id = collection.Insert(this);
+            return true;
         }
     }
 }
