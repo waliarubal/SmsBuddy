@@ -31,6 +31,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
@@ -69,8 +70,12 @@
         <TextBox
             Grid.Row="3"
             Grid.Column="1"
-            Text="{Binding Sms.Message, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            Text="{Binding Sms.ProcessedMessage, Mode=OneWay}"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Visible" />
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="1"
+            Text="{Binding Sms.ProcessedMessage.Length, Mode=OneWay, StringFormat='Message is {0} characters long.'}" />
     </Grid>
 </UserControl>

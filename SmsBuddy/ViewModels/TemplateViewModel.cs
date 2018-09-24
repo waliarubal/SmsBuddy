@@ -2,6 +2,7 @@
 using SmsBuddy.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -18,10 +19,31 @@ namespace SmsBuddy.ViewModels
 
         #region properties
 
+        public int MaxMessageLength
+        {
+            get { return 160; }
+        }
+
+        public int RemainingMessageLength
+        {
+            get { return MaxMessageLength - (Template == null || string.IsNullOrWhiteSpace(Template.Message) ? 0 : Template.Message.Length); }
+        }
+
         public TemplateModel Template
         {
             get { return _template; }
-            set { Set(nameof(Template), ref _template, value); }
+            set
+            {
+                var oldTemplate = _template;
+                if(Set(nameof(Template), ref _template, value))
+                {
+                    if (oldTemplate != null)
+                        oldTemplate.PropertyChanged -= OnTemplatePropertyChanged;
+
+                    if (value != null)
+                        value.PropertyChanged += OnTemplatePropertyChanged;
+                }
+            }
         }
 
         public ObservableCollection<TemplateModel> Templates
@@ -124,6 +146,11 @@ namespace SmsBuddy.ViewModels
         }
 
         #endregion
+
+        void OnTemplatePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChanged(nameof(RemainingMessageLength));
+        }
 
         ObservableCollection<TemplateModel> Refresh(object argument)
         {

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
 using LiteDB;
 using NullVoidCreations.WpfHelpers.Base;
 using NullVoidCreations.WpfHelpers.DataStructures;
@@ -40,10 +42,20 @@ namespace SmsBuddy.Models
                 {
                     var fields = new List<Doublet<string, string>>();
                     foreach (var field in value.Fields)
-                        fields.Add(new Doublet<string, string>(field, null));
+                    {
+                        var messageField = new Doublet<string, string>(field, null);
+                        messageField.PropertyChanged += (object sender, PropertyChangedEventArgs e) => RaisePropertyChanged(nameof(ProcessedMessage));
+                        fields.Add(messageField);
+                    }
+                        
                     Fields = fields;
                 }
             }
+        }
+
+        public string ProcessedMessage
+        {
+            get { return GetMessage(); }
         }
 
         public string Message
@@ -65,6 +77,17 @@ namespace SmsBuddy.Models
         }
 
         #endregion
+
+        string GetMessage()
+        {
+            if (Message == null || Fields == null)
+                return string.Empty;
+
+            var messageBuilder = new StringBuilder(Message);
+            foreach (var field in Fields)
+                messageBuilder.Replace(string.Format("<<{0}>>", field.First), field.Second);
+            return messageBuilder.ToString();
+        }
 
         public bool Delete()
         {

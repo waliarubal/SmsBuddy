@@ -89,7 +89,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height=".25*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Content="Name:" />
@@ -143,9 +145,15 @@
                     Grid.Row="4"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
-                    Text="{Binding Template.Message, Mode=TwoWay}"
+                    MaxLength="{Binding MaxMessageLength, Mode=OneTime}"
+                    Text="{Binding Template.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Visible" />
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Text="{Binding RemainingMessageLength, Mode=OneWay, StringFormat='Approximate {0} characters are left.'}" />
             </Grid>
         </GroupBox>
 
