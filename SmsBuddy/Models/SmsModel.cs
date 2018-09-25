@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using LiteDB;
@@ -99,11 +98,6 @@ namespace SmsBuddy.Models
 
         public bool Save()
         {
-            if (string.IsNullOrEmpty(MobileNumber))
-                throw new Exception("Mobile number not specified.");
-            else if (string.IsNullOrEmpty(Message))
-                throw new Exception("Message not specified.");
-
             var db = Shared.Instance.Database;
             var collection = db.GetCollection<SmsModel>();
             var isSaved = collection.Update(this);

@@ -1,0 +1,73 @@
+﻿using LiteDB;
+using NullVoidCreations.WpfHelpers.Base;
+using NullVoidCreations.WpfHelpers.DataStructures;
+using System;
+using System.Collections.Generic;
+
+namespace SmsBuddy.Models
+{
+    abstract class SmsGatewayBase : NotificationBase, IModel
+    {
+        IEnumerable<Doublet<string, string>> _settings;
+        long _id;
+
+        protected SmsGatewayBase(string name, string providerWebsite)
+        {
+            Name = name;
+            ProviderWebsite = new Uri(providerWebsite, UriKind.Absolute);
+        }
+
+        #region properties
+
+        [BsonId(true)]
+        public long Id
+        {
+            get { return _id; }
+            set { Set(nameof(Id), ref _id, value); }
+        }
+
+        public string Name { get; }
+
+        public Uri ProviderWebsite { get; }
+
+        public IEnumerable<Doublet<string, string>> Settings
+        {
+            get { return _settings; }
+            protected set { Set(nameof(Settings), ref _settings, value); }
+        }
+
+        #endregion
+
+        public bool Delete()
+        {
+            var db = Shared.Instance.Database;
+            var collection = db.GetCollection<SmsGatewayBase>();
+            return collection.Delete(Id);
+        }
+
+        public IEnumerable<IModel> Get()
+        {
+            var db = Shared.Instance.Database;
+            return db.GetCollection<SmsGatewayBase>().FindAll();
+        }
+
+        public bool Save()
+        {
+            var db = Shared.Instance.Database;
+            var collection = db.GetCollection<SmsGatewayBase>();
+            var isSaved = collection.Update(this);
+            if (isSaved)
+                return isSaved;
+
+            Id = collection.Insert(this);
+            return true;
+        }
+
+        public abstract bool Send(SmsModel message);
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+}
