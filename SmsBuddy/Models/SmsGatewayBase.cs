@@ -45,6 +45,18 @@ namespace SmsBuddy.Models
 
         #endregion
 
+        protected string GetSetting(string key)
+        {
+            if (string.IsNullOrEmpty(key) || Settings == null)
+                return default(string);
+
+            foreach (var setting in Settings)
+                if (setting.First.Equals(key))
+                    return setting.Second;
+
+            return default(string);
+        }
+
         public bool Delete()
         {
             var db = Shared.Instance.Database;

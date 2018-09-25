@@ -9,18 +9,24 @@ namespace SmsBuddy.ViewModels
 {
     class SmsGatewayViewModel: ChildViewModelBase
     {
-        IEnumerable<SmsGatewayBase> _providers;
+        IEnumerable<SmsGatewayBase> _providers, _gateways;
         SmsGatewayBase _gateway, _provider;
         ICommand _new, _save, _delete, _refresh;
 
-        public SmsGatewayViewModel(): base("SMS Gateway", "server-32.png") { }
+        public SmsGatewayViewModel(): base("SMS Gateway", "server-32.png") {  }
 
         #region properties
 
         public SmsGatewayBase Gateway
         {
             get { return _gateway; }
-            private set { Set(nameof(Gateway), ref _gateway, value); }
+            set { Set(nameof(Gateway), ref _gateway, value); }
+        }
+
+        public IEnumerable<SmsGatewayBase> Gateways
+        {
+            get { return _gateways; }
+            private set { Set(nameof(Gateways), ref _gateways, value); }
         }
 
         public SmsGatewayBase Provider
@@ -65,6 +71,17 @@ namespace SmsBuddy.ViewModels
 
         #region commands
 
+        public ICommand NewCommand
+        {
+            get
+            {
+                if (_new == null)
+                    _new = new RelayCommand(New);
+
+                return _new;
+            }
+        }
+
         public ICommand SaveCommand
         {
             get
@@ -103,45 +120,53 @@ namespace SmsBuddy.ViewModels
         void Refresh()
         {
             ErrorMessage = null;
-            
+            Gateways = Shared.Instance.Database.GetCollection<SmsGatewayBase>().FindAll();
         }
 
         void New()
         {
             ErrorMessage = null;
-            // Template = new TemplateModel();
+            Provider = null;
+            Gateway = null;
         }
 
         void Save()
         {
             ErrorMessage = null;
 
-            //if (Template == null)
-            //    ErrorMessage = "Select or create a new template first.";
-            //else if (string.IsNullOrEmpty(Template.Name))
-            //    ErrorMessage = "Name not specified.";
-            //else if (string.IsNullOrEmpty(Template.Message))
-            //    ErrorMessage = "Message not specified.";
-            //else
-            //{
-            //    Template.Save();
-            //    New();
-            //    Refresh();
-            //}
+            if (Gateway == null)
+                ErrorMessage = "Select a provider.";
+            else if (string.IsNullOrEmpty(Gateway.AccountName))
+                ErrorMessage = "Account name not specified.";
+            else if (Gateway.Settings != null)
+            {
+                foreach (var setting in Gateway.Settings)
+                {
+                    if (string.IsNullOrEmpty(setting.Second))
+                    {
+                        ErrorMessage = "All provider settings not specified.";
+                        return;
+                    }
+                }
+            }
+            
+            Gateway.Save();
+            New();
+            Refresh();
         }
 
         void Delete()
         {
             ErrorMessage = null;
 
-            //if (Template == null)
-            //    ErrorMessage = "Select or create a new template first.";
-            //else
-            //{
-            //    Template.Delete();
-            //    New();
-            //    Refresh();
-            //}
+            if (Gateway == null)
+                ErrorMessage = "Gateway not selected.";
+            else
+            {
+                Gateway.Delete();
+                New();
+                Refresh();
+            }
         }
     }
 }
