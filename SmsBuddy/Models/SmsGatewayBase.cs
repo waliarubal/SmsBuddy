@@ -9,6 +9,7 @@ namespace SmsBuddy.Models
     abstract class SmsGatewayBase : NotificationBase, IModel
     {
         IEnumerable<Doublet<string, string>> _settings;
+        string _accountName;
         long _id;
 
         protected SmsGatewayBase(string name, string providerWebsite)
@@ -27,6 +28,12 @@ namespace SmsBuddy.Models
         }
 
         public string Name { get; }
+
+        public string AccountName
+        {
+            get { return _accountName; }
+            set { Set(nameof(AccountName), ref _accountName, value); }
+        }
 
         public Uri ProviderWebsite { get; }
 
@@ -67,7 +74,7 @@ namespace SmsBuddy.Models
 
         public override string ToString()
         {
-            return Name;
+            return string.IsNullOrEmpty(AccountName) ? Name : string.Format("{0} ({1})", Name, AccountName);
         }
     }
 }

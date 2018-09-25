@@ -12,6 +12,92 @@
         <vm:SmsGatewayViewModel />
     </UserControl.DataContext>
     <Grid>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/Assets/Styles/SharedStyle.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
+        <ListBox />
+
+        <StackPanel Grid.Row="1">
+            <Button Command="{Binding SaveCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/save-32.png" />
+                    <TextBlock Text="Save" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding NewCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/new-32.png" />
+                    <TextBlock Text="New" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding DeleteCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/cancel-32.png" />
+                    <TextBlock Text="Delete Selected" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <GroupBox
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Margin="2">
+            <GroupBox.Resources>
+                <Style BasedOn="{StaticResource BaseStyle}" TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </GroupBox.Resources>
+            <GroupBox.Header>
+                <StackPanel>
+                    <TextBlock Text="Gateway:" />
+                    <ComboBox
+                        Grid.Column="1"
+                        Width="180"
+                        ItemsSource="{Binding Providers, Mode=OneTime}"
+                        SelectedValue="{Binding Provider, Mode=TwoWay}" />
+                </StackPanel>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Name:" />
+                <TextBlock Grid.Column="1" Text="{Binding Gateway.Name, Mode=OneWay}" />
+
+                <Label Grid.Row="1" Content="Provider Website:" />
+                <TextBlock Grid.Row="1" Grid.Column="1">
+                    <Hyperlink>
+                        <Run Text="{Binding Gateway.ProviderWebsite, Mode=OneWay}" />
+                    </Hyperlink>
+                </TextBlock>
+
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>
