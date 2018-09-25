@@ -72,6 +72,12 @@
                     <TextBlock Text="Delete Selected" />
                 </StackPanel>
             </Button>
+            <Button Command="{Binding RefreshCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/refresh-32.png" />
+                    <TextBlock Text="Refresh" />
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <GroupBox

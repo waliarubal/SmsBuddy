@@ -135,9 +135,15 @@ namespace SmsBuddy.ViewModels
             ErrorMessage = null;
 
             if (Gateway == null)
+            {
                 ErrorMessage = "Select a provider.";
+                return;
+            }
             else if (string.IsNullOrEmpty(Gateway.AccountName))
+            {
                 ErrorMessage = "Account name not specified.";
+                return;
+            }
             else if (Gateway.Settings != null)
             {
                 foreach (var setting in Gateway.Settings)

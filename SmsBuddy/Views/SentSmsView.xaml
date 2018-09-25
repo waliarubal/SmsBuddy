@@ -25,7 +25,17 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
-        <DataGrid ItemsSource="{Binding Messages, Mode=OneWay}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button Command="{Binding RefreshCommand, Mode=OneTime}">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Assets/Images/refresh-32.png" />
+                <TextBlock Text="Refresh" />
+            </StackPanel>
+        </Button>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Messages, Mode=OneWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding MobileNumber}" Header="Mobile Number" />
                 <DataGridTextColumn Binding="{Binding Time}" Header="Time" />

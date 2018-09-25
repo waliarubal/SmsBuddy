@@ -33,6 +33,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height=".25*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -47,15 +48,22 @@
         <Label Content="Mobile Number:" />
         <TextBox Grid.Column="1" Text="{Binding Sms.MobileNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Row="1" Content="Template:" />
+        <Label Grid.Row="1" Content="Gateway:" />
         <ComboBox
             Grid.Row="1"
+            Grid.Column="1"
+            ItemsSource="{Binding Gateways, Mode=OneWay}"
+            SelectedItem="{Binding Sms.Gateway, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Row="2" Content="Template:" />
+        <ComboBox
+            Grid.Row="2"
             Grid.Column="1"
             ItemsSource="{Binding Templates, Mode=OneWay}"
             SelectedValue="{Binding Sms.Template, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <ItemsControl
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.ColumnSpan="2"
             ItemsSource="{Binding Sms.Fields, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
@@ -72,28 +80,28 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Label Grid.Row="3" Content="Message:" />
+        <Label Grid.Row="4" Content="Message:" />
         <TextBox
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="1"
             IsReadOnly="True"
             Text="{Binding Sms.Message, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap"
             VerticalScrollBarVisibility="Visible" />
         <TextBlock
-            Grid.Row="4"
+            Grid.Row="5"
             Grid.Column="1"
             Text="{Binding Sms.Message.Length, Mode=OneWay, StringFormat='Message is {0} characters long.', FallbackValue='Message is 0 characters long.'}" />
 
-        <Label Grid.Row="5" Content="Schedule:" />
+        <Label Grid.Row="6" Content="Schedule:" />
         <CheckBox
-            Grid.Row="5"
+            Grid.Row="6"
             Grid.Column="1"
             VerticalAlignment="Center"
             Content="Send message every day."
             IsChecked="{Binding Sms.RepeatDaily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <StackPanel Grid.Row="6" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="7" Grid.ColumnSpan="2">
             <Button Command="{Binding SaveCommand, Mode=OneTime}">
                 <StackPanel>
                     <Image Source="pack://application:,,,/Assets/Images/save-32.png" />
@@ -118,10 +126,16 @@
                     <TextBlock Text="Send SMS Now" />
                 </StackPanel>
             </Button>
+            <Button Command="{Binding RefreshCommand, Mode=OneTime}">
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Assets/Images/refresh-32.png" />
+                    <TextBlock Text="Refresh" />
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <DataGrid
-            Grid.Row="7"
+            Grid.Row="8"
             Grid.ColumnSpan="2"
             ItemsSource="{Binding Messages, Mode=OneWay}"
             SelectedValue="{Binding Sms, Mode=TwoWay}">

@@ -9,6 +9,7 @@ namespace SmsBuddy.ViewModels
     {
         SmsModel _sms;
         IEnumerable<TemplateModel> _templates;
+        IEnumerable<SmsGatewayBase> _gateways;
         IEnumerable<SmsModel> _messages;
         ICommand _refresh, _new, _send, _save, _delete;
 
@@ -32,6 +33,12 @@ namespace SmsBuddy.ViewModels
         {
             get { return _messages; }
             private set { Set(nameof(Messages), ref _messages, value); }
+        }
+
+        public IEnumerable<SmsGatewayBase> Gateways
+        {
+            get { return _gateways; }
+            private set { Set(nameof(Gateways), ref _gateways, value); }
         }
 
         #endregion
@@ -123,6 +130,8 @@ namespace SmsBuddy.ViewModels
                 ErrorMessage = "Select or create a new message.";
             else if (string.IsNullOrEmpty(Sms.MobileNumber))
                 ErrorMessage = "Mobile number not specified.";
+            else if (Sms.Gateway == null)
+                ErrorMessage = "SMS gateway not selected.";
             else if (Sms.Template == null)
                 ErrorMessage = "Template not selected.";
             else if (string.IsNullOrEmpty(Sms.Message))
@@ -138,11 +147,31 @@ namespace SmsBuddy.ViewModels
         void Send()
         {
             ErrorMessage = null;
+
+            if (Sms == null)
+                ErrorMessage = "Select or create a new message.";
+            else if (string.IsNullOrEmpty(Sms.MobileNumber))
+                ErrorMessage = "Mobile number not specified.";
+            else if (Sms.Gateway == null)
+                ErrorMessage = "SMS gateway not selected.";
+            else if (Sms.Template == null)
+                ErrorMessage = "Template not selected.";
+            else if (string.IsNullOrEmpty(Sms.Message))
+                ErrorMessage = "Message not specified.";
+            else
+            {
+                if(Sms.Gateway.Send(Sms))
+                {
+                    var sentSms = new SentSmsModel(Sms);
+                    sentSms.Save();
+                }
+            }
         }
 
         void Refresh()
         {
             ErrorMessage = null;
+            Gateways = Shared.Instance.Database.GetCollection<SmsGatewayBase>().FindAll();
             Templates = new TemplateModel().Get() as IEnumerable<TemplateModel>;
             Messages = new SmsModel().Get() as IEnumerable<SmsModel>;
         }

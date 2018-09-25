@@ -37,6 +37,11 @@ namespace SmsBuddy.ViewModels
             private set { Set(nameof(ChildViewModel), ref _childViewModel, value); }
         }
 
+        public string DatabaseFile
+        {
+            get { return Shared.Instance.DatabaseFile; }
+        }
+
         #endregion
 
         #region commands

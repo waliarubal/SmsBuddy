@@ -11,6 +11,18 @@ namespace SmsBuddy.Models
         string _mobileNumber, _message;
         DateTime _time;
 
+        public SentSmsModel()
+        {
+
+        }
+
+        public SentSmsModel(SmsModel sms): this()
+        {
+            MobileNumber = sms.MobileNumber;
+            Message = sms.Message;
+            Time = DateTime.Now;
+        }
+
         #region properties
 
         [BsonId(true)]

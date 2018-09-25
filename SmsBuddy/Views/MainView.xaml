@@ -79,6 +79,8 @@
             Content="{Binding Path=ChildView, Mode=OneWay}" />
 
         <StatusBar Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="{Binding DatabaseFile, Mode=OneTime}" />
+            <Separator />
             <TextBlock
                 FontWeight="Bold"
                 Foreground="Red"

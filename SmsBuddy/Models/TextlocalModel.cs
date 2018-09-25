@@ -37,7 +37,7 @@ namespace SmsBuddy.Models
                     });
                 var result = new XmlDocument();
                 result.LoadXml(Encoding.UTF8.GetString(response));
-                return result.DocumentElement.SelectSingleNode("/response/status").InnerText.Equals("success");
+                return result.DocumentElement.SelectSingleNode("/response/status").InnerText.Trim().Equals("success");
             }
         }
     }

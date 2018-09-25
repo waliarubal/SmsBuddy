@@ -13,6 +13,7 @@ namespace SmsBuddy.Models
         long _id;
         bool _repeatDaily;
         TemplateModel _template;
+        SmsGatewayBase _gateway;
         IEnumerable<Doublet<string, string>> _fields;
 
         #region properties
@@ -50,6 +51,12 @@ namespace SmsBuddy.Models
                     Fields = fields;
                 }
             }
+        }
+
+        public SmsGatewayBase Gateway
+        {
+            get { return _gateway; }
+            set { Set(nameof(Gateway), ref _gateway, value); }
         }
 
         public string Message
