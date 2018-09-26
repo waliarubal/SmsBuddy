@@ -39,10 +39,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding MobileNumber}" Header="Mobile Number" />
                 <DataGridTextColumn Binding="{Binding Time}" Header="Time" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Message}"
-                    Header="Message" />
+                <DataGridTextColumn Binding="{Binding Message}" Header="Message" />
                 <DataGridTemplateColumn Header="Sent">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

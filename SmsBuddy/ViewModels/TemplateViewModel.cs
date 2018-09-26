@@ -148,8 +148,8 @@ namespace SmsBuddy.ViewModels
             else
             {
                 Template.Save();
-                New();
                 Refresh();
+                New();
             }
         }
 
@@ -162,8 +162,8 @@ namespace SmsBuddy.ViewModels
             else
             {
                 Template.Delete();
-                New();
                 Refresh();
+                New();
             }
         }
 

@@ -157,8 +157,8 @@ namespace SmsBuddy.ViewModels
             }
             
             Gateway.Save();
-            New();
             Refresh();
+            New();
         }
 
         void Delete()
@@ -170,8 +170,8 @@ namespace SmsBuddy.ViewModels
             else
             {
                 Gateway.Delete();
-                New();
                 Refresh();
+                New();
             }
         }
     }

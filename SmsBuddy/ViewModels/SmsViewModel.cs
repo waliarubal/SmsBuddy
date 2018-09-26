@@ -144,8 +144,8 @@ namespace SmsBuddy.ViewModels
             else
             {
                 Sms.Delete();
-                New();
                 Refresh();
+                New();
             }
         }
 
@@ -172,8 +172,8 @@ namespace SmsBuddy.ViewModels
             else
             {
                 Sms.Save();
-                New();
                 Refresh();
+                New();
             }
         }
 
@@ -194,6 +194,7 @@ namespace SmsBuddy.ViewModels
             else
             {
                 var sentMessage = Sms.Gateway.Send(Sms);
+                ErrorMessage = sentMessage.IsSent ? null : sentMessage.GatewayMessage;
                 sentMessage.Save();
             }
         }

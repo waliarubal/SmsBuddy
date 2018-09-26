@@ -84,7 +84,9 @@
             <TextBlock
                 FontWeight="Bold"
                 Foreground="Red"
-                Text="{Binding ChildViewModel.ErrorMessage, Mode=OneWay}" />
+                Text="{Binding ChildViewModel.ErrorMessage, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"
+                ToolTip="{Binding ChildViewModel.ErrorMessage, Mode=OneWay}" />
 
         </StatusBar>
 
