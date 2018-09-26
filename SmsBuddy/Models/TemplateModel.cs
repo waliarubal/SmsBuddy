@@ -1,11 +1,12 @@
 ﻿using LiteDB;
 using NullVoidCreations.WpfHelpers.Base;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace SmsBuddy.Models
 {
-    class TemplateModel: NotificationBase, IModel
+    class TemplateModel: NotificationBase, IModel, IEquatable<TemplateModel>
     {
         string _name, _message;
         long _id;
@@ -87,6 +88,11 @@ namespace SmsBuddy.Models
         public override string ToString()
         {
             return Name;
+        }
+
+        public bool Equals(TemplateModel other)
+        {
+            return other != null && other.Id.Equals(Id);
         }
     }
 }

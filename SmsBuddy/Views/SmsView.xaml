@@ -53,14 +53,14 @@
             Grid.Row="1"
             Grid.Column="1"
             ItemsSource="{Binding Gateways, Mode=OneWay}"
-            SelectedItem="{Binding Sms.Gateway, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            SelectedValue="{Binding Sms.Gateway, Mode=TwoWay}" />
 
         <Label Grid.Row="2" Content="Template:" />
         <ComboBox
             Grid.Row="2"
             Grid.Column="1"
             ItemsSource="{Binding Templates, Mode=OneWay}"
-            SelectedValue="{Binding Sms.Template, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            SelectedValue="{Binding Sms.Template, Mode=TwoWay}" />
 
         <ItemsControl
             Grid.Row="3"

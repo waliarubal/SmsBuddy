@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SmsBuddy.Models
 {
-    abstract class SmsGatewayBase : NotificationBase, IModel
+    abstract class SmsGatewayBase : NotificationBase, IModel, IEquatable<SmsGatewayBase>
     {
         IEnumerable<Doublet<string, string>> _settings;
         string _accountName;
@@ -87,6 +87,11 @@ namespace SmsBuddy.Models
         public override string ToString()
         {
             return string.IsNullOrEmpty(AccountName) ? Name : string.Format("{0} ({1})", Name, AccountName);
+        }
+
+        public bool Equals(SmsGatewayBase other)
+        {
+            return other != null && other.Id.Equals(Id);
         }
     }
 }
