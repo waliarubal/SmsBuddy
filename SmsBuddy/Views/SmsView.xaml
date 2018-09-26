@@ -24,9 +24,6 @@
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="pack://application:,,,/Assets/Styles/SharedStyle.xaml" />
                 </ResourceDictionary.MergedDictionaries>
-                <Style TargetType="StackPanel">
-                    <Setter Property="Orientation" Value="Horizontal" />
-                </Style>
             </ResourceDictionary>
         </Grid.Resources>
         <Grid.RowDefinitions>
@@ -94,14 +91,37 @@
             Text="{Binding Sms.Message.Length, Mode=OneWay, StringFormat='Message is {0} characters long.', FallbackValue='Message is 0 characters long.'}" />
 
         <Label Grid.Row="6" Content="Schedule:" />
-        <CheckBox
+        <StackPanel
             Grid.Row="6"
             Grid.Column="1"
-            VerticalAlignment="Center"
-            Content="Send message every day."
-            IsChecked="{Binding Sms.RepeatDaily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style BasedOn="{StaticResource BaseStyle}" TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style BasedOn="{StaticResource BaseStyle}" TargetType="CheckBox">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style BasedOn="{StaticResource BaseStyle}" TargetType="ComboBox">
+                    <Setter Property="MinWidth" Value="40" />
+                </Style>
+            </StackPanel.Resources>
+            <CheckBox
+                VerticalAlignment="Center"
+                Content="Send message every day at"
+                IsChecked="{Binding Sms.RepeatDaily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <ComboBox ItemsSource="{Binding Hours, Mode=OneTime}" SelectedValue="{Binding Sms.Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="hour and " />
+            <ComboBox ItemsSource="{Binding Minutes, Mode=OneTime}" SelectedValue="{Binding Sms.Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="minutes." />
+        </StackPanel>
 
         <StackPanel Grid.Row="7" Grid.ColumnSpan="2">
+            <StackPanel.Resources>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Horizontal" />
+                </Style>
+            </StackPanel.Resources>
             <Button Command="{Binding SaveCommand, Mode=OneTime}">
                 <StackPanel>
                     <Image Source="pack://application:,,,/Assets/Images/save-32.png" />

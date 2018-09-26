@@ -12,6 +12,7 @@ namespace SmsBuddy.Models
         string _mobileNumber, _message;
         long _id;
         bool _repeatDaily;
+        int _hour, _minute;
         TemplateModel _template;
         SmsGatewayBase _gateway;
         IEnumerable<Doublet<string, string>> _fields;
@@ -69,6 +70,18 @@ namespace SmsBuddy.Models
         {
             get { return _repeatDaily; }
             set { Set(nameof(RepeatDaily), ref _repeatDaily, value); }
+        }
+
+        public int Hour
+        {
+            get { return _hour; }
+            set { Set(nameof(Hour), ref _hour, value); }
+        }
+
+        public int Minute
+        {
+            get { return _minute; }
+            set { Set(nameof(Minute), ref _minute, value); }
         }
 
         public IEnumerable<Doublet<string, string>> Fields

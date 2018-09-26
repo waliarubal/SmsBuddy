@@ -1,9 +1,11 @@
 ﻿using LiteDB;
 using NullVoidCreations.WpfHelpers;
+using SmsBuddy.Models;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace SmsBuddy
 {
@@ -16,6 +18,7 @@ namespace SmsBuddy
         LiteDatabase _database;
         string _databaseFile, _startupDirectory;
         AssemblyInformation _assemblyInformation;
+        DispatcherTimer _timer;
 
         static Shared()
         {
@@ -29,6 +32,13 @@ namespace SmsBuddy
 
         ~Shared()
         {
+            if (_timer != null)
+            {
+                _timer.Tick -= SchedulerTick;
+                _timer.Stop();
+                _timer = null;
+            }
+
             if (Database != null)
                 Database.Dispose();
         }
@@ -114,6 +124,28 @@ namespace SmsBuddy
 
             var database = new LiteDatabase(connectionString);
             return database;
+        }
+
+        void SchedulerTick(object sender, EventArgs e)
+        {
+            var time = DateTime.Now;
+            var messages = Database.GetCollection<SmsModel>().Find(sms => sms.RepeatDaily && sms.Hour == time.Hour && sms.Minute == time.Minute);
+            foreach(var message in messages)
+            {
+                var sentMessage = message.Gateway.Send(message);
+                sentMessage.Save();
+            }
+        }
+
+        public void StartScheduler()
+        {
+            if (_timer != null)
+                return;
+
+            _timer = new DispatcherTimer(DispatcherPriority.Normal, Application.Current.Dispatcher);
+            _timer.Tick += SchedulerTick;
+            _timer.Interval = TimeSpan.FromMinutes(1);
+            _timer.Start();
         }
     }
 }
