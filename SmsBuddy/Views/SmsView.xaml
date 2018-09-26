@@ -70,7 +70,7 @@
                             <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Label Content="{Binding First, StringFormat='{}{0}:', Mode=OneTime}" />
+                        <Label Content="{Binding First, Mode=OneTime}" ContentStringFormat="{}{0}:" />
                         <TextBox Grid.Column="1" Text="{Binding Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </DataTemplate>
