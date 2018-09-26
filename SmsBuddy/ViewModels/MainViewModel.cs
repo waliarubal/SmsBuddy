@@ -121,6 +121,8 @@ namespace SmsBuddy.ViewModels
                 }
             }
             ChildViewModels = childViewModels;
+
+            Shared.Instance.StartScheduler();
         }
     }
 }
