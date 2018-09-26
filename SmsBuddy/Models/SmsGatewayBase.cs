@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SmsBuddy.Models
 {
-    abstract class SmsGatewayBase : NotificationBase, IModel, IEquatable<SmsGatewayBase>
+    abstract class SmsGatewayBase : NotificationBase, IModel
     {
         IEnumerable<Doublet<string, string>> _settings;
         string _accountName;
@@ -89,9 +89,15 @@ namespace SmsBuddy.Models
             return string.IsNullOrEmpty(AccountName) ? Name : string.Format("{0} ({1})", Name, AccountName);
         }
 
-        public bool Equals(SmsGatewayBase other)
+        public override bool Equals(object obj)
         {
+            var other = obj as SmsGatewayBase;
             return other != null && other.Id.Equals(Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.ToString().GetHashCode();
         }
     }
 }

@@ -127,5 +127,16 @@ namespace SmsBuddy.Models
             Id = collection.Insert(this);
             return true;
         }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as SmsModel;
+            return other != null && other.Id.Equals(Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.ToString().GetHashCode();
+        }
     }
 }
