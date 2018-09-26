@@ -43,6 +43,18 @@
                     Width="*"
                     Binding="{Binding Message}"
                     Header="Message" />
+                <DataGridTemplateColumn Header="Sent">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image
+                                Width="16"
+                                Height="16"
+                                Source="pack://application:,,,/Assets/Images/ok-32.png"
+                                Visibility="{Binding IsSent, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding GatewayMessage}" Header="Gateway Message" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

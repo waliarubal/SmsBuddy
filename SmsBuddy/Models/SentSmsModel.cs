@@ -8,8 +8,10 @@ namespace SmsBuddy.Models
     class SentSmsModel: NotificationBase, IModel
     {
         long _id;
-        string _mobileNumber, _message;
+        string _mobileNumber, _message, _gatewayMessage;
         DateTime _time;
+        bool _isSent;
+
 
         public SentSmsModel()
         {
@@ -48,6 +50,18 @@ namespace SmsBuddy.Models
         {
             get { return _time; }
             set { Set(nameof(Time), ref _time, value); }
+        }
+
+        public bool IsSent
+        {
+            get { return _isSent; }
+            set { Set(nameof(IsSent), ref _isSent, value); }
+        }
+
+        public string GatewayMessage
+        {
+            get { return _gatewayMessage; }
+            set { Set(nameof(GatewayMessage), ref _gatewayMessage, value); }
         }
 
         #endregion

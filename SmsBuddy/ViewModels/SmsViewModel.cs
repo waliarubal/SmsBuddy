@@ -193,11 +193,8 @@ namespace SmsBuddy.ViewModels
                 ErrorMessage = "Message not specified.";
             else
             {
-                if(Sms.Gateway.Send(Sms))
-                {
-                    var sentSms = new SentSmsModel(Sms);
-                    sentSms.Save();
-                }
+                var sentMessage = Sms.Gateway.Send(Sms);
+                sentMessage.Save();
             }
         }
 

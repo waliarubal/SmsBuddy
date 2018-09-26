@@ -132,11 +132,8 @@ namespace SmsBuddy
             var messages = Database.GetCollection<SmsModel>().Find(sms => sms.RepeatDaily && sms.Hour == time.Hour && sms.Minute == time.Minute);
             foreach(var message in messages)
             {
-                if(message.Gateway.Send(message))
-                {
-                    var sentMessage = new SentSmsModel(message);
-                    sentMessage.Save();
-                }
+                var sentMessage = message.Gateway.Send(message);
+                sentMessage.Save();
             }
         }
 

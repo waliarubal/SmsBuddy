@@ -21,7 +21,7 @@ namespace SmsBuddy.Models
             Settings = settings;
         }
 
-        public override bool Send(SmsModel message)
+        public override SentSmsModel Send(SmsModel message)
         {
             var messageText = HttpUtility.UrlEncode(message.Message);
             using (var client = new WebClient())
@@ -37,7 +37,11 @@ namespace SmsBuddy.Models
                     });
                 var result = new XmlDocument();
                 result.LoadXml(Encoding.UTF8.GetString(response));
-                return result.DocumentElement.SelectSingleNode("/response/status").InnerText.Trim().Equals("success");
+
+                var sentSms = new SentSmsModel(message);
+                sentSms.IsSent = result.DocumentElement.SelectSingleNode("/response/status").InnerText.Trim().Equals("success");
+                sentSms.GatewayMessage = sentSms.IsSent ? null : result.DocumentElement.SelectSingleNode("/response/errors/error/message").InnerText.Trim();
+                return sentSms;
             }
         }
     }

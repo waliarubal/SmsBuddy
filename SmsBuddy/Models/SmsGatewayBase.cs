@@ -82,7 +82,7 @@ namespace SmsBuddy.Models
             return true;
         }
 
-        public abstract bool Send(SmsModel message);
+        public abstract SentSmsModel Send(SmsModel message);
 
         public override string ToString()
         {
