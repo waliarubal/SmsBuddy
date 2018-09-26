@@ -11,6 +11,7 @@ namespace SmsBuddy.ViewModels
         IEnumerable<TemplateModel> _templates;
         IEnumerable<SmsGatewayBase> _gateways;
         IEnumerable<SmsModel> _messages;
+        IEnumerable<int> _hours, _minutes;
         ICommand _refresh, _new, _send, _save, _delete;
 
         public SmsViewModel() : base("Messages", "sms-32.png") { }
@@ -39,6 +40,38 @@ namespace SmsBuddy.ViewModels
         {
             get { return _gateways; }
             private set { Set(nameof(Gateways), ref _gateways, value); }
+        }
+
+        public IEnumerable<int> Hours
+        {
+            get
+            {
+                if (_hours == null)
+                {
+                    var hours = new List<int>();
+                    for (var hour = 0; hour < 24; hour++)
+                        hours.Add(hour);
+                    _hours = hours;
+                }
+
+                return _hours;
+            }
+        }
+
+        public IEnumerable<int> Minutes
+        {
+            get
+            {
+                if (_minutes == null)
+                {
+                    var minutes = new List<int>();
+                    for (var minute = 0; minute < 60; minute++)
+                        minutes.Add(minute);
+                    _minutes = minutes;
+                }
+
+                return _minutes;
+            }
         }
 
         #endregion
