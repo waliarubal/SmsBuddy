@@ -1,13 +1,15 @@
 ﻿using LiteDB;
 using NullVoidCreations.WpfHelpers.Base;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SmsBuddy.Models
 {
     class ContactModel : NotificationBase, IModel
     {
         long _id;
-        string _mobileNumber, _firstName, _lastName, _company;
+        string _firstName, _lastName, _company;
+        ObservableCollection<string> _mobileNumbers;
 
         #region properties
 
@@ -49,10 +51,10 @@ namespace SmsBuddy.Models
             set { Set(nameof(Company), ref _company, value); }
         }
 
-        public string MobileNumber
+        public ObservableCollection<string> MobileNumbers
         {
-            get { return _mobileNumber; }
-            set { Set(nameof(MobileNumber), ref _mobileNumber, value); }
+            get { return _mobileNumbers; }
+            set { Set(nameof(MobileNumbers), ref _mobileNumbers, value); }
         }
 
         #endregion
@@ -80,6 +82,11 @@ namespace SmsBuddy.Models
 
             Id = collection.Insert(this);
             return true;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
         public override bool Equals(object obj)
