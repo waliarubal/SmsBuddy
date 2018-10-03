@@ -35,20 +35,23 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="LabelColumn" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Mobile Number:" />
+        <Label Content="Mobile Numbers:" />
         <ListBox Grid.Column="1" ItemsSource="{Binding Sms.MobileNumbers, Mode=OneWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Button>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Mob" />
+                            <TextBlock Text="{Binding}" />
                             <Image
                                 Width="16"
                                 Height="16"
@@ -63,12 +66,29 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
-        <!--<TextBox Grid.Column="1" Text="{Binding Sms.MobileNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
+        <ComboBox
+            Grid.Column="2"
+            Width="220"
+            ItemsSource="{Binding Contacts, Mode=OneWay}"
+            SelectedValue="{Binding SelectedContact, Mode=TwoWay}" />
+        <Button Grid.Column="3" Command="{Binding AddMobileNumber, Mode=OneTime}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                    <Binding Path="SelectedContact" />
+                    <Binding Path="Sms.MobileNumbers" />
+                </MultiBinding>
+            </Button.CommandParameter>
+            <Image
+                Width="16"
+                Height="16"
+                Source="pack://application:,,,/Assets/Images/plus-32.png" />
+        </Button>
 
         <Label Grid.Row="1" Content="Gateway:" />
         <ComboBox
             Grid.Row="1"
             Grid.Column="1"
+            Grid.ColumnSpan="3"
             ItemsSource="{Binding Gateways, Mode=OneWay}"
             SelectedValue="{Binding Sms.Gateway, Mode=TwoWay}" />
 
@@ -76,6 +96,7 @@
         <ComboBox
             Grid.Row="2"
             Grid.Column="1"
+            Grid.ColumnSpan="3"
             ItemsSource="{Binding Templates, Mode=OneWay}"
             SelectedValue="{Binding Sms.Template, Mode=TwoWay}" />
 
@@ -101,6 +122,7 @@
         <TextBox
             Grid.Row="4"
             Grid.Column="1"
+            Grid.ColumnSpan="3"
             IsReadOnly="True"
             Text="{Binding Sms.Message, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap"
@@ -108,12 +130,14 @@
         <TextBlock
             Grid.Row="5"
             Grid.Column="1"
+            Grid.ColumnSpan="3"
             Text="{Binding Sms.Message.Length, Mode=OneWay, StringFormat='Message is {0} characters long.', FallbackValue='Message is 0 characters long.'}" />
 
         <Label Grid.Row="6" Content="Schedule:" />
         <StackPanel
             Grid.Row="6"
             Grid.Column="1"
+            Grid.ColumnSpan="3"
             Orientation="Horizontal">
             <StackPanel.Resources>
                 <Style BasedOn="{StaticResource BaseStyle}" TargetType="TextBlock">
@@ -133,10 +157,54 @@
             <ComboBox ItemsSource="{Binding Hours, Mode=OneTime}" SelectedValue="{Binding Sms.Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Text="hour and " />
             <ComboBox ItemsSource="{Binding Minutes, Mode=OneTime}" SelectedValue="{Binding Sms.Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="minutes." />
+            <TextBlock Text="minutes to below mentioned mobile numbers." />
         </StackPanel>
+        <ListBox
+            Grid.Row="7"
+            Grid.Column="1"
+            ItemsSource="{Binding Sms.MobileNumbersScheduled, Mode=OneWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" />
+                            <Image
+                                Width="16"
+                                Height="16"
+                                Source="pack://application:,,,/Assets/Images/minus-32.png" />
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        <ComboBox
+            Grid.Row="7"
+            Grid.Column="2"
+            Width="220"
+            ItemsSource="{Binding Contacts, Mode=OneWay}"
+            SelectedValue="{Binding SelectedContact1, Mode=TwoWay}" />
+        <Button
+            Grid.Row="7"
+            Grid.Column="3"
+            Command="{Binding AddMobileNumber, Mode=OneTime}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource MultiValueConverter}">
+                    <Binding Path="SelectedContact1" />
+                    <Binding Path="Sms.MobileNumbersScheduled" />
+                </MultiBinding>
+            </Button.CommandParameter>
+            <Image
+                Width="16"
+                Height="16"
+                Source="pack://application:,,,/Assets/Images/plus-32.png" />
+        </Button>
 
-        <StackPanel Grid.Row="7" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="4">
             <StackPanel.Resources>
                 <Style TargetType="StackPanel">
                     <Setter Property="Orientation" Value="Horizontal" />
@@ -175,12 +243,12 @@
         </StackPanel>
 
         <DataGrid
-            Grid.Row="8"
-            Grid.ColumnSpan="2"
+            Grid.Row="9"
+            Grid.ColumnSpan="4"
             ItemsSource="{Binding Messages, Mode=OneWay}"
             SelectedValue="{Binding Sms, Mode=TwoWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding MobileNumber}" Header="Mobile Number" />
+                <DataGridTextColumn Binding="{Binding MobileNumbers}" Header="Mobile Number" />
                 <DataGridTextColumn Binding="{Binding Template}" Header="Template" />
                 <DataGridTextColumn
                     Width="*"

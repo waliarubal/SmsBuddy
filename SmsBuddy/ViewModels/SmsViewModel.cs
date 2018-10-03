@@ -8,15 +8,29 @@ namespace SmsBuddy.ViewModels
     class SmsViewModel: ChildViewModelBase
     {
         SmsModel _sms;
+        ContactModel _selectedContact, _selectedContact1;
         IEnumerable<TemplateModel> _templates;
         IEnumerable<SmsGatewayBase> _gateways;
         IEnumerable<SmsModel> _messages;
+        IEnumerable<ContactModel> _contacts;
         IEnumerable<int> _hours, _minutes;
-        ICommand _refresh, _new, _send, _save, _delete;
+        ICommand _refresh, _new, _send, _save, _delete, _addMobile;
 
         public SmsViewModel() : base("Messages", "sms-32.png") { }
 
         #region properties
+
+        public ContactModel SelectedContact
+        {
+            get { return _selectedContact; }
+            set { Set(nameof(SelectedContact), ref _selectedContact, value); }
+        }
+
+        public ContactModel SelectedContact1
+        {
+            get { return _selectedContact1; }
+            set { Set(nameof(SelectedContact1), ref _selectedContact1, value); }
+        }
 
         public SmsModel Sms
         {
@@ -40,6 +54,12 @@ namespace SmsBuddy.ViewModels
         {
             get { return _gateways; }
             private set { Set(nameof(Gateways), ref _gateways, value); }
+        }
+
+        public IEnumerable<ContactModel> Contacts
+        {
+            get { return _contacts; }
+            private set { Set(nameof(Contacts), ref _contacts, value); }
         }
 
         public IEnumerable<int> Hours
@@ -133,7 +153,23 @@ namespace SmsBuddy.ViewModels
             }
         }
 
+        public ICommand AddMobileNumber
+        {
+            get
+            {
+                if (_addMobile == null)
+                    _addMobile = new RelayCommand<object[]>(AddMobile);
+
+                return _addMobile;
+            }
+        }
+
         #endregion
+
+        void AddMobile(object[] arguments)
+        {
+
+        }
 
         void Delete()
         {
@@ -202,7 +238,9 @@ namespace SmsBuddy.ViewModels
         void Refresh()
         {
             ErrorMessage = null;
+            
             Gateways = Shared.Instance.Database.GetCollection<SmsGatewayBase>().FindAll();
+            Contacts = new ContactModel().Get() as IEnumerable<ContactModel>;
             Templates = new TemplateModel().Get() as IEnumerable<TemplateModel>;
             Messages = new SmsModel().Get() as IEnumerable<SmsModel>;
         }

@@ -4,6 +4,7 @@
     xmlns:nvc="http://schemas.nullvoidcreations.com/wpfhelpers">
     <nvc:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <nvc:MultiValueConverter x:Key="MultiValueConverter" />
 
     <Style x:Key="BaseStyle" TargetType="FrameworkElement">
         <Setter Property="Margin" Value="2" />
