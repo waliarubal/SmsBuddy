@@ -82,7 +82,7 @@ namespace SmsBuddy.Models
             return true;
         }
 
-        public abstract SentSmsModel Send(SmsModel message);
+        public abstract SentSmsModel Send(SmsModel message, IEnumerable<string> mobileNumbers);
 
         public override string ToString()
         {

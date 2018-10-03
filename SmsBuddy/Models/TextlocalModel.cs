@@ -21,16 +21,22 @@ namespace SmsBuddy.Models
             Settings = settings;
         }
 
-        public override SentSmsModel Send(SmsModel message)
+        public override SentSmsModel Send(SmsModel message, IEnumerable<string> mobileNumbers)
         {
             var messageText = HttpUtility.UrlEncode(message.Message);
             using (var client = new WebClient())
             {
+                var numbers = new StringBuilder();
+                foreach (var number in mobileNumbers)
+                    numbers.AppendFormat("{0},", number);
+                if (numbers.Length > 0)
+                    numbers.Remove(numbers.Length - 1, 1);
+
                 var response = client.UploadValues("https://api.textlocal.in/send/",
                     new NameValueCollection
                     {
                         { "apikey" , GetSetting("API Key") },
-                        { "numbers" , message.MobileNumber },
+                        { "numbers" , numbers.ToString() },
                         { "message" , messageText },
                         { "sender" , GetSetting("Sender") },
                         { "format", "xml" }

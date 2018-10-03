@@ -161,7 +161,7 @@ namespace SmsBuddy.ViewModels
 
             if (Sms == null)
                 ErrorMessage = "Select or create a new message.";
-            else if (string.IsNullOrEmpty(Sms.MobileNumber))
+            else if (Sms.MobileNumbers.Count == 0)
                 ErrorMessage = "Mobile number not specified.";
             else if (Sms.Gateway == null)
                 ErrorMessage = "SMS gateway not selected.";
@@ -183,7 +183,7 @@ namespace SmsBuddy.ViewModels
 
             if (Sms == null)
                 ErrorMessage = "Select or create a new message.";
-            else if (string.IsNullOrEmpty(Sms.MobileNumber))
+            else if (Sms.MobileNumbers.Count == 0)
                 ErrorMessage = "Mobile number not specified.";
             else if (Sms.Gateway == null)
                 ErrorMessage = "SMS gateway not selected.";
@@ -193,7 +193,7 @@ namespace SmsBuddy.ViewModels
                 ErrorMessage = "Message not specified.";
             else
             {
-                var sentMessage = Sms.Gateway.Send(Sms);
+                var sentMessage = Sms.Gateway.Send(Sms, Sms.MobileNumbers);
                 ErrorMessage = sentMessage.IsSent ? null : sentMessage.GatewayMessage;
                 sentMessage.Save();
             }

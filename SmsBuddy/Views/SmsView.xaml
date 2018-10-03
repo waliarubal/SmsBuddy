@@ -43,7 +43,27 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="Mobile Number:" />
-        <TextBox Grid.Column="1" Text="{Binding Sms.MobileNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ListBox Grid.Column="1" ItemsSource="{Binding Sms.MobileNumbers, Mode=OneWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Mob" />
+                            <Image
+                                Width="16"
+                                Height="16"
+                                Source="pack://application:,,,/Assets/Images/minus-32.png" />
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        <!--<TextBox Grid.Column="1" Text="{Binding Sms.MobileNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
 
         <Label Grid.Row="1" Content="Gateway:" />
         <ComboBox

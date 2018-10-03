@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using LiteDB;
@@ -9,13 +10,20 @@ namespace SmsBuddy.Models
 {
     class SmsModel: NotificationBase, IModel
     {
-        string _mobileNumber, _message;
+        string _message;
+        ObservableCollection<string> _mobileNumbers, _mobileNumbersScheduled;
         long _id;
         bool _repeatDaily;
         int _hour, _minute;
         TemplateModel _template;
         SmsGatewayBase _gateway;
         IEnumerable<Doublet<string, string>> _fields;
+
+        public SmsModel()
+        {
+            _mobileNumbers = new ObservableCollection<string>();
+            _mobileNumbersScheduled = new ObservableCollection<string>();
+        }
 
         #region properties
 
@@ -26,10 +34,16 @@ namespace SmsBuddy.Models
             set { Set(nameof(Id), ref _id, value); }
         }
 
-        public string MobileNumber
+        public ObservableCollection<string> MobileNumbers
         {
-            get { return _mobileNumber; }
-            set { Set(nameof(MobileNumber), ref _mobileNumber, value); }
+            get { return _mobileNumbers; }
+            set { Set(nameof(MobileNumbers), ref _mobileNumbers, value); }
+        }
+
+        public ObservableCollection<string> MobileNumbersScheduled
+        {
+            get { return _mobileNumbersScheduled; }
+            set { Set(nameof(MobileNumbersScheduled), ref _mobileNumbersScheduled, value); }
         }
 
         public TemplateModel Template

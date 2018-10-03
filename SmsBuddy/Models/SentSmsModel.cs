@@ -2,24 +2,28 @@
 using NullVoidCreations.WpfHelpers.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SmsBuddy.Models
 {
     class SentSmsModel: NotificationBase, IModel
     {
         long _id;
-        string _mobileNumber, _message, _gatewayMessage;
+        string _message, _gatewayMessage;
+        ObservableCollection<string> _mobileNumbers, _mobileNumbersScheduled;
         DateTime _time;
         bool _isSent;
 
         public SentSmsModel()
         {
-
+            _mobileNumbers = new ObservableCollection<string>();
+            _mobileNumbersScheduled = new ObservableCollection<string>();
         }
 
         public SentSmsModel(SmsModel sms): this()
         {
-            MobileNumber = sms.MobileNumber;
+            MobileNumbers = sms.MobileNumbers;
+            MobileNumbersScheduled = sms.MobileNumbersScheduled;
             Message = sms.Message;
             Time = DateTime.Now;
         }
@@ -33,10 +37,16 @@ namespace SmsBuddy.Models
             set { Set(nameof(Id), ref _id, value); }
         }
 
-        public string MobileNumber
+        public ObservableCollection<string> MobileNumbers
         {
-            get { return _mobileNumber; }
-            set { Set(nameof(MobileNumber), ref _mobileNumber, value); }
+            get { return _mobileNumbers; }
+            set { Set(nameof(MobileNumbers), ref _mobileNumbers, value); }
+        }
+
+        public ObservableCollection<string> MobileNumbersScheduled
+        {
+            get { return _mobileNumbersScheduled; }
+            set { Set(nameof(MobileNumbersScheduled), ref _mobileNumbersScheduled, value); }
         }
 
         public string Message
