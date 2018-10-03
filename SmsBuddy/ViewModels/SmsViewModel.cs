@@ -1,6 +1,7 @@
 ﻿using NullVoidCreations.WpfHelpers.Commands;
 using SmsBuddy.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace SmsBuddy.ViewModels
@@ -14,7 +15,7 @@ namespace SmsBuddy.ViewModels
         IEnumerable<SmsModel> _messages;
         IEnumerable<ContactModel> _contacts;
         IEnumerable<int> _hours, _minutes;
-        ICommand _refresh, _new, _send, _save, _delete, _addMobile;
+        ICommand _refresh, _new, _send, _save, _delete, _addMobile, _removeMobile;
 
         public SmsViewModel() : base("Messages", "sms-32.png") { }
 
@@ -153,22 +154,44 @@ namespace SmsBuddy.ViewModels
             }
         }
 
-        public ICommand AddMobileNumber
+        public ICommand AddMobileNumberCommand
         {
             get
             {
                 if (_addMobile == null)
-                    _addMobile = new RelayCommand<object[]>(AddMobile);
+                    _addMobile = new RelayCommand<List<object>>(AddMobile) { IsSynchronous = true };
 
                 return _addMobile;
             }
         }
 
+        public ICommand RemoveMobileNumberCommand
+        {
+            get
+            {
+                if (_removeMobile == null)
+                    _removeMobile = new RelayCommand<List<object>>(RemoveMobile) { IsSynchronous = true };
+
+                return _removeMobile;
+            }
+        }
+
         #endregion
 
-        void AddMobile(object[] arguments)
+        void RemoveMobile(List<object> arguments)
         {
+            var number = arguments[0] as string;
+            var collection = arguments[1] as ObservableCollection<string>;
+            collection.Remove(number);
+        }
 
+        void AddMobile(List<object> arguments)
+        {
+            var contact = arguments[0] as ContactModel;
+            var collection = arguments[1] as ObservableCollection<string>;
+            foreach (var number in contact.MobileNumbers)
+                if (!collection.Contains(number))
+                    collection.Add(number);
         }
 
         void Delete()
