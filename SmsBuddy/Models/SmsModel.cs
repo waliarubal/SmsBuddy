@@ -11,7 +11,7 @@ namespace SmsBuddy.Models
     class SmsModel: NotificationBase, IModel
     {
         string _message;
-        ObservableCollection<string> _mobileNumbers, _mobileNumbersScheduled;
+        ExtendedObservableCollection<string> _mobileNumbers, _mobileNumbersScheduled;
         long _id;
         bool _repeatDaily;
         int _hour, _minute;
@@ -21,8 +21,8 @@ namespace SmsBuddy.Models
 
         public SmsModel()
         {
-            _mobileNumbers = new ObservableCollection<string>();
-            _mobileNumbersScheduled = new ObservableCollection<string>();
+            _mobileNumbers = new ExtendedObservableCollection<string>();
+            _mobileNumbersScheduled = new ExtendedObservableCollection<string>();
         }
 
         #region properties
@@ -34,13 +34,13 @@ namespace SmsBuddy.Models
             set { Set(nameof(Id), ref _id, value); }
         }
 
-        public ObservableCollection<string> MobileNumbers
+        public ExtendedObservableCollection<string> MobileNumbers
         {
             get { return _mobileNumbers; }
             set { Set(nameof(MobileNumbers), ref _mobileNumbers, value); }
         }
 
-        public ObservableCollection<string> MobileNumbersScheduled
+        public ExtendedObservableCollection<string> MobileNumbersScheduled
         {
             get { return _mobileNumbersScheduled; }
             set { Set(nameof(MobileNumbersScheduled), ref _mobileNumbersScheduled, value); }

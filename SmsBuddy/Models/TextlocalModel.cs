@@ -44,7 +44,7 @@ namespace SmsBuddy.Models
                 var result = new XmlDocument();
                 result.LoadXml(Encoding.UTF8.GetString(response));
 
-                var sentSms = new SentSmsModel(message);
+                var sentSms = new SentSmsModel(message, mobileNumbers);
                 sentSms.IsSent = result.DocumentElement.SelectSingleNode("/response/status").InnerText.Trim().Equals("success");
                 sentSms.GatewayMessage = sentSms.IsSent ? null : result.DocumentElement.SelectSingleNode("/response/errors/error/message").InnerText.Trim();
                 return sentSms;
