@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using LiteDB;
@@ -64,6 +63,7 @@ namespace SmsBuddy.Models
                     }
                         
                     Fields = fields;
+                    Message = GetMessage();
                 }
             }
         }
@@ -108,12 +108,13 @@ namespace SmsBuddy.Models
 
         string GetMessage()
         {
-            if (Template == null || Template.Message == null || Fields == null)
+            if (Template == null || Template.Message == null)
                 return string.Empty;
 
             var messageBuilder = new StringBuilder(Template.Message);
-            foreach (var field in Fields)
-                messageBuilder.Replace(string.Format("<<{0}>>", field.First), field.Second);
+            if (Fields != null)
+                foreach (var field in Fields)
+                    messageBuilder.Replace(string.Format("<<{0}>>", field.First), field.Second);
             return messageBuilder.ToString();
         }
 
