@@ -123,6 +123,13 @@ namespace SmsBuddy.ViewModels
             ChildViewModels = childViewModels;
 
             Shared.Instance.StartScheduler();
+
+            // trial period check
+            if (DateTime.Now.Date >= new DateTime(2018, 12, 1))
+            {
+                MessageBox.Show("You are no longer allowed to use this application.");
+                Application.Current.Shutdown(1);
+            }
         }
     }
 }
