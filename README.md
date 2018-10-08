@@ -14,3 +14,5 @@ Supported SMS gateways are listed below.
 ![Message](https://raw.githubusercontent.com/waliarubal/SmsBuddy/master/Screenshots/2.png)
 
 ![Outbox](https://raw.githubusercontent.com/waliarubal/SmsBuddy/master/Screenshots/3.png)
+
+![Contacts](https://raw.githubusercontent.com/waliarubal/SmsBuddy/master/Screenshots/4.png)

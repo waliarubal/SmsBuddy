@@ -1,5 +1,6 @@
 ﻿using NullVoidCreations.WpfHelpers.Commands;
 using SmsBuddy.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -210,8 +211,14 @@ namespace SmsBuddy.ViewModels
 
         void New()
         {
+            var schedule = DateTime.Now.AddMinutes(15);
             ErrorMessage = null;
-            Sms = new SmsModel();
+            Sms = new SmsModel
+            {
+                RepeatDaily = true,
+                Hour = schedule.Hour,
+                Minute = schedule.Minute
+            };
         }
 
         void Save()
@@ -228,6 +235,8 @@ namespace SmsBuddy.ViewModels
                 ErrorMessage = "Template not selected.";
             else if (string.IsNullOrEmpty(Sms.Message))
                 ErrorMessage = "Message not specified.";
+            else if (Sms.RepeatDaily && Sms.MobileNumbersScheduled.Count == 0)
+                ErrorMessage = "Mobile number for scheduled SMS sending not specified.";
             else
             {
                 Sms.Save();

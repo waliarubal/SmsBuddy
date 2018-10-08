@@ -1,8 +1,8 @@
 ﻿using LiteDB;
 using NullVoidCreations.WpfHelpers.Base;
+using NullVoidCreations.WpfHelpers.DataStructures;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace SmsBuddy.Models
 {
@@ -10,22 +10,20 @@ namespace SmsBuddy.Models
     {
         long _id;
         string _message, _gatewayMessage;
-        ObservableCollection<string> _mobileNumbers, _mobileNumbersScheduled;
+        ExtendedObservableCollection<string> _mobileNumbers;
         DateTime _time;
         bool _isSent;
 
         public SentSmsModel()
         {
-            _mobileNumbers = new ObservableCollection<string>();
-            _mobileNumbersScheduled = new ObservableCollection<string>();
+            _mobileNumbers = new ExtendedObservableCollection<string>();
         }
 
-        public SentSmsModel(SmsModel sms): this()
+        public SentSmsModel(SmsModel sms, IEnumerable<string> mobileNumbers): this()
         {
-            MobileNumbers = sms.MobileNumbers;
-            MobileNumbersScheduled = sms.MobileNumbersScheduled;
             Message = sms.Message;
             Time = DateTime.Now;
+            MobileNumbers = new ExtendedObservableCollection<string>(mobileNumbers);
         }
 
         #region properties
@@ -37,16 +35,10 @@ namespace SmsBuddy.Models
             set { Set(nameof(Id), ref _id, value); }
         }
 
-        public ObservableCollection<string> MobileNumbers
+        public ExtendedObservableCollection<string> MobileNumbers
         {
             get { return _mobileNumbers; }
             set { Set(nameof(MobileNumbers), ref _mobileNumbers, value); }
-        }
-
-        public ObservableCollection<string> MobileNumbersScheduled
-        {
-            get { return _mobileNumbersScheduled; }
-            set { Set(nameof(MobileNumbersScheduled), ref _mobileNumbersScheduled, value); }
         }
 
         public string Message

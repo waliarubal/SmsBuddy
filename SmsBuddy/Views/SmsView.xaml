@@ -108,7 +108,7 @@
 
         <ItemsControl
             Grid.Row="3"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="4"
             ItemsSource="{Binding Sms.Fields, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -263,12 +263,23 @@
             ItemsSource="{Binding Messages, Mode=OneWay}"
             SelectedValue="{Binding Sms, Mode=TwoWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding MobileNumbers}" Header="Mobile Numbers" />
+                <DataGridTextColumn Binding="{Binding MobileNumbers.String}" Header="Mobile Numbers" />
                 <DataGridTextColumn Binding="{Binding Template}" Header="Template" />
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Message}"
                     Header="Message" />
+                <DataGridTemplateColumn Header="Schedule">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Hour}" />
+                                <Run Text=":" />
+                                <Run Text="{Binding Minute}" />
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

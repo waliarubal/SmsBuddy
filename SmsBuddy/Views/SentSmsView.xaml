@@ -37,7 +37,7 @@
         </Button>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Messages, Mode=OneWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding MobileNumber}" Header="Mobile Number" />
+                <DataGridTextColumn Binding="{Binding MobileNumbers.String}" Header="Mobile Numbers" />
                 <DataGridTextColumn Binding="{Binding Time}" Header="Time" />
                 <DataGridTextColumn Binding="{Binding Message}" Header="Message" />
                 <DataGridTemplateColumn Header="Sent">

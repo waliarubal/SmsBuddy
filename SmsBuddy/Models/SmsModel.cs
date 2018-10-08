@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using LiteDB;
@@ -11,7 +10,7 @@ namespace SmsBuddy.Models
     class SmsModel: NotificationBase, IModel
     {
         string _message;
-        ObservableCollection<string> _mobileNumbers, _mobileNumbersScheduled;
+        ExtendedObservableCollection<string> _mobileNumbers, _mobileNumbersScheduled;
         long _id;
         bool _repeatDaily;
         int _hour, _minute;
@@ -21,8 +20,8 @@ namespace SmsBuddy.Models
 
         public SmsModel()
         {
-            _mobileNumbers = new ObservableCollection<string>();
-            _mobileNumbersScheduled = new ObservableCollection<string>();
+            _mobileNumbers = new ExtendedObservableCollection<string>();
+            _mobileNumbersScheduled = new ExtendedObservableCollection<string>();
         }
 
         #region properties
@@ -34,13 +33,13 @@ namespace SmsBuddy.Models
             set { Set(nameof(Id), ref _id, value); }
         }
 
-        public ObservableCollection<string> MobileNumbers
+        public ExtendedObservableCollection<string> MobileNumbers
         {
             get { return _mobileNumbers; }
             set { Set(nameof(MobileNumbers), ref _mobileNumbers, value); }
         }
 
-        public ObservableCollection<string> MobileNumbersScheduled
+        public ExtendedObservableCollection<string> MobileNumbersScheduled
         {
             get { return _mobileNumbersScheduled; }
             set { Set(nameof(MobileNumbersScheduled), ref _mobileNumbersScheduled, value); }
@@ -64,6 +63,7 @@ namespace SmsBuddy.Models
                     }
                         
                     Fields = fields;
+                    Message = GetMessage();
                 }
             }
         }
@@ -108,12 +108,13 @@ namespace SmsBuddy.Models
 
         string GetMessage()
         {
-            if (Template == null || Template.Message == null || Fields == null)
+            if (Template == null || Template.Message == null)
                 return string.Empty;
 
             var messageBuilder = new StringBuilder(Template.Message);
-            foreach (var field in Fields)
-                messageBuilder.Replace(string.Format("<<{0}>>", field.First), field.Second);
+            if (Fields != null)
+                foreach (var field in Fields)
+                    messageBuilder.Replace(string.Format("<<{0}>>", field.First), field.Second);
             return messageBuilder.ToString();
         }
 
